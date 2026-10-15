@@ -12,7 +12,7 @@ contract Employers {
     }
 
     employee[] public employers;
-    mapping (uint => string) public idToName;
+    mapping (uint => address) public idToAddress;
 
     constructor () {
         owner = msg.sender;
@@ -23,14 +23,14 @@ contract Employers {
         _;
     }
 
-    function registerEmployee (string memory _name, address _wallet) external onlyOwner{
+    function registerEmployee (string memory _name, address _wallet) external {
         employers.push(employee ({
          name : _name,
          id : employers.length,
          inHaiard : true,
          wallet : _wallet
         }));
-        idToName[employers.length] = _name;
+        idToAddress[employers.length] = msg.sender;
     }
 
     function getTotalEmployee () external view returns (uint) {

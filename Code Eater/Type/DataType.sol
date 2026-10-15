@@ -8,3 +8,18 @@ struct FreelancerPofile {
     uint experienceYear;
     address wallet;
 }
+
+struct jobListingInput {
+    string title;
+    string jobDiscription;
+    uint dedline;
+    uint price;
+}
+
+struct jobListings {
+    uint id;
+    string title;
+    string jobDiscription;
+    uint dedline;
+    uint price; 
+}

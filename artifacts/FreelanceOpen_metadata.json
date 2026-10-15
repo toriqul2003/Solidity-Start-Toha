@@ -14,6 +14,115 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
+						"name": "expectedFee",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "actualFee",
+						"type": "uint256"
+					}
+				],
+				"name": "FreelancerOpen_IncorectFee",
+				"type": "error"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "caller",
+						"type": "address"
+					}
+				],
+				"name": "registerProfile",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "employerID",
+						"type": "uint256"
+					},
+					{
+						"components": [
+							{
+								"internalType": "string",
+								"name": "title",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "jobDiscription",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "dedline",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "price",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct jobListingInput",
+						"name": "jobListingInputs",
+						"type": "tuple"
+					}
+				],
+				"name": "creatJobListing",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "employers",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "inHaiard",
+						"type": "bool"
+					},
+					{
+						"internalType": "address",
+						"name": "wallet",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
 						"name": "",
 						"type": "uint256"
 					}
@@ -103,6 +212,38 @@
 				"type": "function"
 			},
 			{
+				"inputs": [],
+				"name": "getTotalEmployee",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "idToAddress",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "string",
@@ -116,6 +257,24 @@
 					}
 				],
 				"name": "register",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_name",
+						"type": "string"
+					},
+					{
+						"internalType": "address",
+						"name": "_wallet",
+						"type": "address"
+					}
+				],
+				"name": "registerEmployee",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -149,19 +308,19 @@
 	},
 	"sources": {
 		"Code Eater/Freelancer.sol": {
-			"keccak256": "0x496075e60c97e77af82e822ec71ee9e78926146deebaa98614163a778dc961d2",
+			"keccak256": "0x2a77c18991cdf081d8ad101554f7d565451aad1c9e4bee5f0a6656a2b1460a0e",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://7f3e4c87f6e2245a81b9a6d23a8b43418c2ecbeb1892a8b4cbf89697f77573e9",
-				"dweb:/ipfs/QmbJmg8ymFeGThSMM2UYWLbFgkTPAysWt7omNch3K9CkGD"
+				"bzz-raw://1ed733da40be0999b68059558f3f8914439ee099644a097ba117577d8263cd57",
+				"dweb:/ipfs/QmPpKP7K8wiQGRGNFWdqfrMmUKqcTJyGWTfhjkXvaByWgQ"
 			]
 		},
 		"Code Eater/Type/DataType.sol": {
-			"keccak256": "0xafc18f4be0db0de8b2d1d715b3395a7bf31c42943c5989971a6371122a8c27ad",
+			"keccak256": "0xec6acc004f4f43009c2c2cef67b20837afdd25bde9c23c5ea9dd369b6648c716",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://47019910e8824244ec6634ce486d9563e6c776425f14ee7bbedc0951248dabb1",
-				"dweb:/ipfs/QmRbcFRuwtsgDJZ7dsR4uV2p1SHqmfYZKdEfTsh89ZW2ck"
+				"bzz-raw://e51d151f2e825dd7e40fc76ced1ca92a16a8e48a5248a5e4d486a39d34f3c7cb",
+				"dweb:/ipfs/QmTTCSdb5UeDNnE9PKdtJ2PzSrY8GaSd2uPAqXayefDWfU"
 			]
 		}
 	},
