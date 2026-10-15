@@ -1,0 +1,81 @@
+{
+	"compiler": {
+		"version": "0.8.34+commit.80d5c536"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "bankAddress",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [],
+				"name": "attack",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "bank",
+				"outputs": [
+					{
+						"internalType": "contract BankV",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "receive"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"NoN Traning/ValnarebleBank.sol": "Attacker"
+		},
+		"evmVersion": "osaka",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"NoN Traning/ValnarebleBank.sol": {
+			"keccak256": "0x315e219975d7fb3a1ac37ddcc1a8c84bbcf2e07379ff5004a3d797f5a865a9bd",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://2ef9180ad8112186d15490c04859b8ccf02147f35733ae59f052ce976f0754a0",
+				"dweb:/ipfs/QmUM4s4huML5z2PHomvjKxMLdf9Mwk8fTUWBFDw66u4qsL"
+			]
+		}
+	},
+	"version": 1
+}

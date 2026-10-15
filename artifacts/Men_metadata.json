@@ -1,0 +1,84 @@
+{
+	"compiler": {
+		"version": "0.8.34+commit.80d5c536"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_Age",
+						"type": "uint256"
+					}
+				],
+				"name": "setAge",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_Name",
+						"type": "string"
+					}
+				],
+				"name": "setName",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"NoN Traning/Abstract&Interface.sol": "Men"
+		},
+		"evmVersion": "osaka",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"NoN Traning/Abstract&Interface.sol": {
+			"keccak256": "0x4a7edc8d1ef5fd5972c731c601892eb602c9391101f0d7e9538b003bcb7050bd",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://db8ec41c3ef3ac0f3f8ce70d5964ed96843125179c35d4137b1df8f16c645566",
+				"dweb:/ipfs/QmPFXpJE92SDRxnP8fRYg11UrEjg7CsgohmxWkvsMotyvB"
+			]
+		}
+	},
+	"version": 1
+}

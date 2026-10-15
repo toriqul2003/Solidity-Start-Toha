@@ -1,0 +1,222 @@
+{
+  "MyProfile.sol": {
+    "__sources__": {
+      "MyProfile.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.35;\r\n\r\n// একটা Profile Contract যেখানে:\r\n// ✅ নাম store হবে\r\n// ✅ বয়স store হবে  \r\n// ✅ তুমি active কিনা\r\n// ✅ নাম update করা যাবে\r\n// ✅ বয়স update করা যাবে\r\n// ✅ সব info একসাথে দেখা যাবে\r\n\r\ncontract MyProfile {\r\n     string public name;\r\n     uint public age;\r\n     bool public active;\r\n\r\n    constructor (string memory _name,uint _age,bool status){\r\n        name = _name;\r\n        age = _age;\r\n        active = status;\r\n    }\r\n    function updateName (string memory _NewName)public {\r\n        name = _NewName;\r\n    }\r\n    function updateAge (uint _NewAge) public {\r\n        age = _NewAge;\r\n    }\r\n    function seeInfo ()public view returns(string memory,uint,bool){\r\n        return (name,age,active);\r\n    }\r\n}",
+        "file": "MyProfile.sol"
+      }
+    }
+  },
+  "New Start/MyProfile.sol": {
+    "__sources__": {
+      "New Start/MyProfile.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.35;\r\n\r\n// একটা Profile Contract যেখানে:\r\n// ✅ নাম store হবে\r\n// ✅ বয়স store হবে  \r\n// ✅ তুমি active কিনা\r\n// ✅ নাম update করা যাবে\r\n// ✅ বয়স update করা যাবে\r\n// ✅ সব info একসাথে দেখা যাবে\r\n\r\ncontract MyProfile {\r\n     string public name;\r\n     uint public age;\r\n     bool public active;\r\n\r\n    constructor (string memory _name,uint _age,bool status){\r\n        name = _name;\r\n        age = _age;\r\n        active = status;\r\n    }\r\n    function updateName (string memory _NewName)public {\r\n        name = _NewName;\r\n    }\r\n    function updateAge (uint _NewAge) public {\r\n        age = _NewAge;\r\n    }\r\n    function seeInfo ()public view returns(string memory,uint,bool){\r\n        return (name,age,active);\r\n    }\r\n}",
+        "file": "New Start/MyProfile.sol"
+      }
+    }
+  },
+  "New Start/Mapping.sol": {
+    "__sources__": {
+      "New Start/Mapping.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.30;\r\n\r\ncontract Mapping {\r\n    mapping (address => uint) public balances;\r\n\r\n    function setValue (uint _value)public{\r\n        balances[msg.sender]=_value;\r\n    }\r\n    function getValue (address _user)public view returns (uint){\r\n        return balances[_user];\r\n    }\r\n    function updateValue (uint _value)public {\r\n        balances[msg.sender] += _value;\r\n    }\r\n    function deleteValue()public {\r\n        delete balances[msg.sender];\r\n    }\r\n}",
+        "file": "New Start/Mapping.sol"
+      }
+    }
+  },
+  "NoN Traning/ErrorHandaling.sol": {
+    "__sources__": {
+      "NoN Traning/ErrorHandaling.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.30;\r\n\r\ncontract ErrorHandaling {\r\n\r\n    error notOwner();\r\n    function diposit (uint _value) public {\r\n        if (_value == 0){\r\n            revert(\"0 not allwed\");\r\n        }else if (_value >= 100){\r\n            revert(\"Too High Value\");\r\n        }else if (msg.sender == address(0)){\r\n            revert(\"not valid Address\");\r\n        }\r\n    }\r\n}",
+        "file": "NoN Traning/ErrorHandaling.sol"
+      }
+    }
+  },
+  "NoN Traning/Voting.sol": {
+    "__sources__": {
+      "NoN Traning/Voting.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.30;\r\n\r\ncontract votingSystem{\r\n    address public owner;\r\n    uint public candidateCount;\r\n    uint public voteEnd;\r\n\r\n    struct candidate {\r\n        string name;\r\n        uint totalVote;\r\n    }\r\n\r\n    constructor (){\r\n        owner = msg.sender;\r\n        voteEnd = block.timestamp + (60 minutes);\r\n    }\r\n\r\n    mapping (uint => candidate) public candidates;\r\n    mapping (address => bool) public hasVoted;\r\n\r\n    modifier onlyOwnr(){\r\n        require(msg.sender == owner,\"Not Owner\");\r\n        _;\r\n    }\r\n\r\n    modifier votingActive(){\r\n        require(block.timestamp < voteEnd, \"Vote Time Ended\");\r\n        _;\r\n    }\r\n\r\n    modifier votingEnd(){\r\n        require(block.timestamp > voteEnd, \"Vote Stil Active\");\r\n        _;\r\n    }\r\n\r\n    event Add (address AddedBy,string Name, uint CandidateID);\r\n\r\n    function candidateAdd(string memory _Name) public onlyOwnr {\r\n        candidateCount++;\r\n        candidates[candidateCount]=candidate(_Name,0);\r\n        emit Add (msg.sender,_Name,candidateCount);\r\n    }\r\n\r\n    event Voted(address indexed voter, uint indexed candidateId);\r\n\r\n    function vote (uint Id) public votingActive {\r\n        require(!hasVoted[msg.sender],\"Voted\");\r\n        require(Id > 0 && Id <= candidateCount,\"Invalid ID\");\r\n        \r\n        hasVoted[msg.sender] = true;\r\n        candidates[Id].totalVote++;\r\n        emit Voted(msg.sender, Id);\r\n    }\r\n\r\n\r\n    function getRemainigTime() public view returns (uint){\r\n        if (block.timestamp >= voteEnd) return 0;\r\n        return voteEnd - block.timestamp;\r\n    }\r\n}\r\n\r\n// Homework:\r\n// Add events\r\n// Write Winner selctlcn function\r\n// Write get Candidate function\r\n// write get Remaining Time function",
+        "file": "NoN Traning/Voting.sol"
+      }
+    }
+  },
+  "NoN Traning/VotingP.sol": {
+    "__sources__": {
+      "NoN Traning/VotingP.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.30;\r\n\r\ncontract VotingSystem{\r\n    uint public candidateCount;\r\n    uint public voteEnding;\r\n    address public owner;\r\n\r\n    struct candidate{\r\n        string name;\r\n        uint VoteCount;\r\n    }\r\n\r\n    modifier onlyOwner{\r\n        require(msg.sender == owner, \"Invalid Owner\");\r\n        _;\r\n    }\r\n\r\n    modifier voteActive{\r\n        require(block.timestamp <= voteEnding, \"Voting is not Active\");\r\n        _;\r\n    }\r\n\r\n    modifier voteEnded{\r\n        require(block.timestamp >= voteEnding, \"Voting is shil Active\");\r\n        _;\r\n    }\r\n\r\n    event CandidateAdded (address indexed AddedBy,string indexed name,uint indexed ID);\r\n    event Voted (address indexed Voter,uint indexed ID);\r\n    event Winner (string indexed name, uint indexed ID, uint indexed TotalVote);\r\n\r\n    constructor (){\r\n        owner = msg.sender;\r\n        voteEnding = block.timestamp + 60 minutes;\r\n    }\r\n\r\n    mapping (uint => candidate) public candidates;\r\n    mapping (address => bool) public hasVoted;\r\n\r\n    function AddCandidate (string memory _name) public onlyOwner{\r\n        candidateCount++;\r\n        candidates[candidateCount]= candidate(_name,0);\r\n        \r\n        emit CandidateAdded (msg.sender,_name,candidateCount); \r\n    }\r\n\r\n    function vote (uint CandidateID) public voteActive{\r\n        require (!hasVoted[msg.sender],\"Alrady Voted\");\r\n        require (CandidateID >0 && CandidateID <= candidateCount);\r\n\r\n        hasVoted[msg.sender] = true;\r\n        candidates[CandidateID].VoteCount++; \r\n        emit Voted(msg.sender, CandidateID);\r\n    }\r\n\r\n    function RemainingTime () public view returns (uint){\r\n        return block.timestamp - voteEnding;\r\n    }\r\n\r\n}",
+        "file": "NoN Traning/VotingP.sol"
+      }
+    }
+  },
+  "NoN Traning/Wallet.sol": {
+    "__sources__": {
+      "NoN Traning/Wallet.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.30;\r\n\r\ncontract Wallert{\r\n\r\n    mapping (address => uint) public balances;\r\n\r\n    function diposit (uint _amount) public {\r\n        require(_amount > 0, \"Not Valid Amount\");\r\n        balances[msg.sender] = _amount;\r\n    }\r\n\r\n    function withdrow (uint _amount) public {\r\n        require(_amount > 0, \"Not Valid Amount\");\r\n        balances[msg.sender] -=_amount;\r\n    }\r\n\r\n    function getBalance (address user) public view returns (uint){\r\n        return balances[user];\r\n    }\r\n}",
+        "file": "NoN Traning/Wallet.sol"
+      }
+    }
+  },
+  "NoN Traning/PersonalBank.sol": {
+    "__sources__": {
+      "NoN Traning/PersonalBank.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.30;\r\n\r\ncontract personalBank{\r\n    address public owner;\r\n    string public bankName;\r\n    uint public balance;\r\n\r\n    constructor (string memory _bankName){\r\n        owner = msg.sender;\r\n        bankName= _bankName;\r\n        balance = 0;\r\n    }\r\n\r\n    event Transaction (address from, address to, uint amount);\r\n\r\n    modifier onlyOwner{\r\n        require( msg.sender == owner,\"You are not Owner\");\r\n        _;\r\n    }\r\n\r\n    function deposit (uint _amount, address _to) public onlyOwner{\r\n        require(_amount > 0, \"Should Add more Amount\");\r\n        balance += _amount;\r\n        emit Transaction(msg.sender, _to, _amount);\r\n    }\r\n\r\n    function withdraw (uint _amount) public onlyOwner{\r\n        require(_amount <= balance, \"Incafisient Balance\");\r\n        balance -= _amount;\r\n    }\r\n\r\n    function getBalance () public view onlyOwner returns (uint){\r\n        return balance;\r\n    }\r\n}",
+        "file": "NoN Traning/PersonalBank.sol"
+      }
+    }
+  },
+  "NoN Traning/Arrey.sol": {
+    "__sources__": {
+      "NoN Traning/Arrey.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.30;\r\n\r\ncontract Arrey",
+        "file": "NoN Traning/Arrey.sol"
+      }
+    }
+  },
+  "NoN Traning/Mapping&Array.sol": {
+    "__sources__": {
+      "NoN Traning/Mapping&Array.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.30;\r\n\r\ncontract MappingArray {\r\n    mapping (address => uint) public balences;\r\n    address [] public users;\r\n\r\n    function deposit (uint Value) public payable {\r\n        if (balences[msg.sender]==0){\r\n            users.push(msg.sender);\r\n        }\r\n        balences[msg.sender] += Value;\r\n    }\r\n\r\n}",
+        "file": "NoN Traning/Mapping&Array.sol"
+      }
+    }
+  },
+  "NoN Traning/TToken.sol": {
+    "__sources__": {
+      "NoN Traning/TToken.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.30;\r\n\r\ncontract TToken{\r\n    string name;\r\n    string symbol;\r\n    uint totalSupply;\r\n    uint decimals = 18;\r\n\r\n    mapping (address => uint) public balances;\r\n    mapping (address => mapping (address => uint)) public Allow;\r\n\r\n    event transfar(address indexed  from, address indexed to,uint value);\r\n    event Approval(address indexed  owner, address indexed spender ,uint value);\r\n\r\n    constructor (string memory _name, string memory _symbol, uint _totalSupply){\r\n        name = _name;\r\n        symbol = _symbol;\r\n        totalSupply = _totalSupply * 10**decimals;\r\n        balances[msg.sender] = totalSupply;\r\n        emit transfar(address (0), msg.sender, totalSupply);\r\n    }\r\n\r\n    function Transfars (address _to, uint _value) public returns (bool){\r\n        require(_to != address(0), \"Not valid Address\");\r\n        require(balances[msg.sender] >= _value,\"Not Enough Balance\");\r\n        balances[msg.sender] -= _value;\r\n        balances[_to] += _value;\r\n        \r\n        emit transfar(msg.sender, _to, _value);\r\n        return true;\r\n    }\r\n\r\n    function Approve(address _spender, uint _value) public returns (bool){\r\n        require(_spender != address(0), \"Not valid Address\");\r\n        Allow[msg.sender][_spender] = _value;\r\n        emit Approval(msg.sender, _spender, _value);\r\n        return true;\r\n    }\r\n\r\n    function transfarFrom (address _from,address _to, uint _value) public returns (bool){\r\n        require( _to != address(0), \"Not valid Address\");\r\n        require(balances[_from] >= _value,\"Not Enough Balance\");\r\n\r\n        balances[_from] -= _value;\r\n        balances[_to] += _value;\r\n        emit transfar(_from, _to, _value);\r\n        return true;\r\n    }\r\n}",
+        "file": "NoN Traning/TToken.sol"
+      }
+    }
+  },
+  "NoN Traning/Token.sol": {
+    "__sources__": {
+      "NoN Traning/Token.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.30;\r\n\r\ncontract TToken{\r\n    string public name;\r\n    string public symbol;\r\n    uint public totalSupply;\r\n    uint public decimals = 18;\r\n    address public owner;\r\n\r\n    mapping (address => uint) public Balances;\r\n    mapping (address => mapping (address => uint)) public Allow;\r\n\r\n    event transfar (address indexed from, address indexed to, uint value);\r\n    event allowence (address indexed owner, address indexed spender, uint value);\r\n\r\n    constructor (string memory _name, string memory _symbol, uint _totalSupply) {\r\n            name = _name;\r\n            symbol = _symbol;\r\n            totalSupply = _totalSupply * 10 **decimals;\r\n            Balances[msg.sender] = totalSupply;\r\n            owner = msg.sender;\r\n    }\r\n\r\n    modifier onlyOwner {\r\n        require(msg.sender == owner,\"Only Owner can Call\");\r\n        _;\r\n    }\r\n\r\n    function Transfar (address _to, uint _value) public onlyOwner returns (bool){\r\n        require(_to != address(0), \"Not Valid Address\");\r\n        require(Balances[msg.sender] >= _value, \"Not Enough Balance\");\r\n\r\n        Balances[msg.sender] -= _value;\r\n        Balances[_to] += _value;\r\n         \r\n         emit transfar(msg.sender, _to, _value);\r\n         return true;\r\n    }\r\n\r\n    function FundAllow (address _spender, uint _value) public onlyOwner returns (bool){\r\n        require(_spender != address(0), \"Not Valid Address\");\r\n        Allow[msg.sender][_spender] = _value;\r\n        emit allowence(msg.sender, _spender, _value);\r\n        return true;\r\n    }\r\n\r\n    function TransfarFrom (address _from, address _to, uint _value) public returns (bool){\r\n            require(_from != address(0) && _to != address (0), \"Not valid Address\");\r\n            require(Balances[_from] >= _value, \"Not Enough Balance\");\r\n\r\n            Balances[_from] -= _value;\r\n            Balances[_to] += _value;\r\n\r\n            emit transfar(_from, _to, _value);\r\n\r\n            return true;\r\n    }\r\n\r\n    function getBalance () public view returns (uint){\r\n        return Balances[msg.sender];\r\n    }\r\n\r\n}",
+        "file": "NoN Traning/Token.sol"
+      }
+    }
+  },
+  "NoN Traning/b.sol": {
+    "__sources__": {
+      "NoN Traning/b.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.30;\r\n\r\ncontract B is A {\r\n    constructor (string memory _name, uint _age) A (_name,_age){\r\n    }\r\n\r\n    function fun1 () public pure override returns (string memory){\r\n        return \"Hello Toha\";\r\n    }\r\n}",
+        "file": "NoN Traning/b.sol"
+      }
+    }
+  },
+  "NoN Traning/Inharitence.sol": {
+    "__sources__": {
+      "NoN Traning/Inharitence.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.30;\r\n\r\ncontract A {\r\n    string name;\r\n    uint age;\r\n\r\n    constructor (string memory _name, uint _age){\r\n        name = _name;\r\n        age = _age;\r\n    }\r\n\r\n    function fun1 () public pure virtual returns (string memory){\r\n        return \"Hello Moto\";\r\n    }\r\n}\r\n\r\ncontract B is A {\r\n    constructor (string memory _name, uint _age) A (name, age){\r\n       \r\n    }\r\n\r\n    function fun1 () public pure override  returns (string memory){\r\n        return \"Hello Toha\";\r\n    }\r\n}",
+        "file": "NoN Traning/Inharitence.sol"
+      }
+    }
+  },
+  "NoN Traning/Array.sol": {
+    "__sources__": {
+      "NoN Traning/Array.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.30;\r\n\r\ncontract Array {\r\n    // 2 Type of Array we have Fixd Size Array and Dynamic Array \r\n    // string [10] public student; //  Fixed\r\n    string[] public students ; //  Dynamic \r\n    \r\n    // Push Methord it add in the last \r\n    function Push (string memory _name) public {\r\n        students.push(_name);\r\n    }\r\n\r\n    // Find Index Value\r\n    function IndexValue (uint _index) public view returns(string memory){\r\n        return students[_index];\r\n\r\n    }\r\n    \r\n    function update (uint _index, string memory _name) public {\r\n        students[_index] = _name;\r\n    }\r\n\r\n    function TotalElement () public view returns (uint){\r\n        return students.length;\r\n    }\r\n    \r\n    // pop Use to Delete Eliment From Last\r\n    function pop () public {\r\n        students.pop();\r\n    }\r\n}",
+        "file": "NoN Traning/Array.sol"
+      }
+    }
+  },
+  "NoN Traning/Abstract&Interface.sol": {
+    "__sources__": {
+      "NoN Traning/Abstract&Interface.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.30;\r\n\r\n// abstract contract Man {\r\n//     string public Name;\r\n//     uint public Age;\r\n\r\n//     function setName(string memory _name) public virtual;\r\n//     function setAge(uint _age) public virtual;\r\n// }\r\n\r\n// contract Toha is Man {\r\n//     function setName(string memory _name) public override {\r\n//         Name = _name;\r\n//     }\r\n\r\n//     function setAge(uint _age) public override {\r\n//         Age = _age;\r\n//     }\r\n// }\r\n\r\ninterface Itoken {\r\n    function Name (string memory _Name) external returns (string memory) ;\r\n    event setNameAS (address indexed setBY,string indexed setName);    \r\n}\r\n\r\ncontract TCoin is Itoken {\r\n    function Name (string memory _Name) external override returns (string memory) {\r\n        \r\n        emit setNameAS(msg.sender, _Name);\r\n        return _Name;\r\n    }\r\n}\r\n\r\n",
+        "file": "NoN Traning/Abstract&Interface.sol"
+      }
+    }
+  },
+  "NoN Traning/Struct.sol": {
+    "__sources__": {
+      "NoN Traning/Struct.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.30;\r\n\r\ncontract Struct {\r\n    // struct NID {\r\n    //     string Name;\r\n    //     string Father;\r\n    //     string Mother;\r\n    //     uint Age;\r\n    //     string Blood;\r\n    //     address wallet;\r\n    // }\r\n\r\n    // mapping (address => NID) public Nids;\r\n\r\n    // function setNID (string memory _name,string memory _father, string memory _mother, uint _age, string memory _blood) public {\r\n    //     Nids[msg.sender] = NID\r\n    //     ({\r\n    //     Name:   _name,\r\n    //     Father: _father,\r\n    //     Mother: _mother,\r\n    //     Age:    _age,\r\n    //     Blood:  _blood,\r\n    //     wallet: msg.sender\r\n    //     });\r\n    // }\r\n\r\n    struct product{\r\n        string name;\r\n        uint price;\r\n        bool stock;\r\n    }\r\n    \r\n    product[] public Products;\r\n\r\n    function AddProduct (string memory _name, uint _price, bool _Stock) public {\r\n        Products.push(product({\r\n            name : _name,\r\n            price: _price,\r\n            stock: _Stock\r\n        }));\r\n    }\r\n    function getProduct (uint _index) public view returns (product memory){\r\n            return Products[_index];\r\n    }\r\n\r\n}",
+        "file": "NoN Traning/Struct.sol"
+      }
+    }
+  },
+  "NoN Traning/Advance1.sol": {
+    "__sources__": {
+      "NoN Traning/Advance1.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.30;\r\n\r\ncontract Advance {\r\n    function getContractBalance () public view returns (uint) {\r\n        return address(ms).balance;\r\n    }\r\n}",
+        "file": "NoN Traning/Advance1.sol"
+      }
+    }
+  },
+  "NoN Traning/ValnarebleBank.sol": {
+    "__sources__": {
+      "NoN Traning/ValnarebleBank.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.30;\r\n\r\ncontract BankV{\r\n\r\n    mapping (address => uint) public Balance;\r\n\r\n    function diposit ( ) public payable {\r\n        Balance[msg.sender] += msg.value;\r\n    }\r\n\r\n    function withdrow (  ) public {\r\n        uint amount = Balance[msg.sender];\r\n        require(amount < 0, \"Not Enough Balance\");\r\n\r\n        (bool sent,) = msg.sender.call {value : amount}(\"\");\r\n        require(sent, \"Failed\");\r\n\r\n        Balance [msg.sender] = 0;\r\n    }\r\n}\r\n\r\ncontract Attacker {\r\n    BankV public bank;\r\n\r\n    constructor (address bankAddress){\r\n            bank = BankV(bankAddress);\r\n    }\r\n\r\n    function attack () public {\r\n        bank.diposit{value : 1 ether}();\r\n        bank.withdrow();\r\n    }\r\n\r\n    receive() external payable { \r\n        if (address(bank).balance >= 1 ether){\r\n                bank.withdrow();\r\n        }\r\n    }\r\n}",
+        "file": "NoN Traning/ValnarebleBank.sol"
+      }
+    }
+  },
+  "@openzeppelin/contracts/utils/ReentrancyGuard.sol": {
+    "./StorageSlot.sol": ".deps/npm/@openzeppelin/contracts@5.6.1/utils/StorageSlot.sol"
+  },
+  "@openzeppelin/contracts@5.6.1/utils/ReentrancyGuard.sol": {
+    "./StorageSlot.sol": ".deps/npm/@openzeppelin/contracts@5.6.1/utils/StorageSlot.sol"
+  },
+  "NoN Traning/SecurityBank.sol": {
+    "@openzeppelin/contracts/utils/ReentrancyGuard.sol": ".deps/npm/@openzeppelin/contracts@5.6.1/utils/ReentrancyGuard.sol",
+    "__sources__": {
+      "NoN Traning/SecurityBank.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.30;\r\n\r\nimport \"@openzeppelin/contracts/utils/ReentrancyGuard.sol\";\r\n\r\ncontract SecurityBank is ReentrancyGuard {\r\n    mapping (address => uint) public Balance;\r\n\r\n    function withdraw () public nonReentrant {\r\n        uint amount = Balance[msg.sender];\r\n        require(amount > 0, \"Not Enough Balance\");\r\n\r\n        Balance[msg.sender] = 0;\r\n\r\n        (bool sent, )= msg.sender.call{value : amount} (\"\");\r\n        require(sent, \"Failed\"); \r\n    }\r\n}",
+        "file": "NoN Traning/SecurityBank.sol"
+      },
+      "@openzeppelin/contracts/utils/ReentrancyGuard.sol": {
+        "content": "// SPDX-License-Identifier: MIT\n// OpenZeppelin Contracts (last updated v5.5.0) (utils/ReentrancyGuard.sol)\n\npragma solidity ^0.8.20;\n\nimport {StorageSlot} from \"./StorageSlot.sol\";\n\n/**\n * @dev Contract module that helps prevent reentrant calls to a function.\n *\n * Inheriting from `ReentrancyGuard` will make the {nonReentrant} modifier\n * available, which can be applied to functions to make sure there are no nested\n * (reentrant) calls to them.\n *\n * Note that because there is a single `nonReentrant` guard, functions marked as\n * `nonReentrant` may not call one another. This can be worked around by making\n * those functions `private`, and then adding `external` `nonReentrant` entry\n * points to them.\n *\n * TIP: If EIP-1153 (transient storage) is available on the chain you're deploying at,\n * consider using {ReentrancyGuardTransient} instead.\n *\n * TIP: If you would like to learn more about reentrancy and alternative ways\n * to protect against it, check out our blog post\n * https://blog.openzeppelin.com/reentrancy-after-istanbul/[Reentrancy After Istanbul].\n *\n * IMPORTANT: Deprecated. This storage-based reentrancy guard will be removed and replaced\n * by the {ReentrancyGuardTransient} variant in v6.0.\n *\n * @custom:stateless\n */\nabstract contract ReentrancyGuard {\n    using StorageSlot for bytes32;\n\n    // keccak256(abi.encode(uint256(keccak256(\"openzeppelin.storage.ReentrancyGuard\")) - 1)) & ~bytes32(uint256(0xff))\n    bytes32 private constant REENTRANCY_GUARD_STORAGE =\n        0x9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f00;\n\n    // Booleans are more expensive than uint256 or any type that takes up a full\n    // word because each write operation emits an extra SLOAD to first read the\n    // slot's contents, replace the bits taken up by the boolean, and then write\n    // back. This is the compiler's defense against contract upgrades and\n    // pointer aliasing, and it cannot be disabled.\n\n    // The values being non-zero value makes deployment a bit more expensive,\n    // but in exchange the refund on every call to nonReentrant will be lower in\n    // amount. Since refunds are capped to a percentage of the total\n    // transaction's gas, it is best to keep them low in cases like this one, to\n    // increase the likelihood of the full refund coming into effect.\n    uint256 private constant NOT_ENTERED = 1;\n    uint256 private constant ENTERED = 2;\n\n    /**\n     * @dev Unauthorized reentrant call.\n     */\n    error ReentrancyGuardReentrantCall();\n\n    constructor() {\n        _reentrancyGuardStorageSlot().getUint256Slot().value = NOT_ENTERED;\n    }\n\n    /**\n     * @dev Prevents a contract from calling itself, directly or indirectly.\n     * Calling a `nonReentrant` function from another `nonReentrant`\n     * function is not supported. It is possible to prevent this from happening\n     * by making the `nonReentrant` function external, and making it call a\n     * `private` function that does the actual work.\n     */\n    modifier nonReentrant() {\n        _nonReentrantBefore();\n        _;\n        _nonReentrantAfter();\n    }\n\n    /**\n     * @dev A `view` only version of {nonReentrant}. Use to block view functions\n     * from being called, preventing reading from inconsistent contract state.\n     *\n     * CAUTION: This is a \"view\" modifier and does not change the reentrancy\n     * status. Use it only on view functions. For payable or non-payable functions,\n     * use the standard {nonReentrant} modifier instead.\n     */\n    modifier nonReentrantView() {\n        _nonReentrantBeforeView();\n        _;\n    }\n\n    function _nonReentrantBeforeView() private view {\n        if (_reentrancyGuardEntered()) {\n            revert ReentrancyGuardReentrantCall();\n        }\n    }\n\n    function _nonReentrantBefore() private {\n        // On the first call to nonReentrant, _status will be NOT_ENTERED\n        _nonReentrantBeforeView();\n\n        // Any calls to nonReentrant after this point will fail\n        _reentrancyGuardStorageSlot().getUint256Slot().value = ENTERED;\n    }\n\n    function _nonReentrantAfter() private {\n        // By storing the original value once again, a refund is triggered (see\n        // https://eips.ethereum.org/EIPS/eip-2200)\n        _reentrancyGuardStorageSlot().getUint256Slot().value = NOT_ENTERED;\n    }\n\n    /**\n     * @dev Returns true if the reentrancy guard is currently set to \"entered\", which indicates there is a\n     * `nonReentrant` function in the call stack.\n     */\n    function _reentrancyGuardEntered() internal view returns (bool) {\n        return _reentrancyGuardStorageSlot().getUint256Slot().value == ENTERED;\n    }\n\n    function _reentrancyGuardStorageSlot() internal pure virtual returns (bytes32) {\n        return REENTRANCY_GUARD_STORAGE;\n    }\n}\n",
+        "file": "@openzeppelin/contracts@5.6.1/utils/ReentrancyGuard.sol"
+      },
+      "@openzeppelin/contracts/utils/StorageSlot.sol": {
+        "content": "// SPDX-License-Identifier: MIT\n// OpenZeppelin Contracts (last updated v5.1.0) (utils/StorageSlot.sol)\n// This file was procedurally generated from scripts/generate/templates/StorageSlot.js.\n\npragma solidity ^0.8.20;\n\n/**\n * @dev Library for reading and writing primitive types to specific storage slots.\n *\n * Storage slots are often used to avoid storage conflict when dealing with upgradeable contracts.\n * This library helps with reading and writing to such slots without the need for inline assembly.\n *\n * The functions in this library return Slot structs that contain a `value` member that can be used to read or write.\n *\n * Example usage to set ERC-1967 implementation slot:\n * ```solidity\n * contract ERC1967 {\n *     // Define the slot. Alternatively, use the SlotDerivation library to derive the slot.\n *     bytes32 internal constant _IMPLEMENTATION_SLOT = 0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc;\n *\n *     function _getImplementation() internal view returns (address) {\n *         return StorageSlot.getAddressSlot(_IMPLEMENTATION_SLOT).value;\n *     }\n *\n *     function _setImplementation(address newImplementation) internal {\n *         require(newImplementation.code.length > 0);\n *         StorageSlot.getAddressSlot(_IMPLEMENTATION_SLOT).value = newImplementation;\n *     }\n * }\n * ```\n *\n * TIP: Consider using this library along with {SlotDerivation}.\n */\nlibrary StorageSlot {\n    struct AddressSlot {\n        address value;\n    }\n\n    struct BooleanSlot {\n        bool value;\n    }\n\n    struct Bytes32Slot {\n        bytes32 value;\n    }\n\n    struct Uint256Slot {\n        uint256 value;\n    }\n\n    struct Int256Slot {\n        int256 value;\n    }\n\n    struct StringSlot {\n        string value;\n    }\n\n    struct BytesSlot {\n        bytes value;\n    }\n\n    /**\n     * @dev Returns an `AddressSlot` with member `value` located at `slot`.\n     */\n    function getAddressSlot(bytes32 slot) internal pure returns (AddressSlot storage r) {\n        assembly (\"memory-safe\") {\n            r.slot := slot\n        }\n    }\n\n    /**\n     * @dev Returns a `BooleanSlot` with member `value` located at `slot`.\n     */\n    function getBooleanSlot(bytes32 slot) internal pure returns (BooleanSlot storage r) {\n        assembly (\"memory-safe\") {\n            r.slot := slot\n        }\n    }\n\n    /**\n     * @dev Returns a `Bytes32Slot` with member `value` located at `slot`.\n     */\n    function getBytes32Slot(bytes32 slot) internal pure returns (Bytes32Slot storage r) {\n        assembly (\"memory-safe\") {\n            r.slot := slot\n        }\n    }\n\n    /**\n     * @dev Returns a `Uint256Slot` with member `value` located at `slot`.\n     */\n    function getUint256Slot(bytes32 slot) internal pure returns (Uint256Slot storage r) {\n        assembly (\"memory-safe\") {\n            r.slot := slot\n        }\n    }\n\n    /**\n     * @dev Returns a `Int256Slot` with member `value` located at `slot`.\n     */\n    function getInt256Slot(bytes32 slot) internal pure returns (Int256Slot storage r) {\n        assembly (\"memory-safe\") {\n            r.slot := slot\n        }\n    }\n\n    /**\n     * @dev Returns a `StringSlot` with member `value` located at `slot`.\n     */\n    function getStringSlot(bytes32 slot) internal pure returns (StringSlot storage r) {\n        assembly (\"memory-safe\") {\n            r.slot := slot\n        }\n    }\n\n    /**\n     * @dev Returns an `StringSlot` representation of the string storage pointer `store`.\n     */\n    function getStringSlot(string storage store) internal pure returns (StringSlot storage r) {\n        assembly (\"memory-safe\") {\n            r.slot := store.slot\n        }\n    }\n\n    /**\n     * @dev Returns a `BytesSlot` with member `value` located at `slot`.\n     */\n    function getBytesSlot(bytes32 slot) internal pure returns (BytesSlot storage r) {\n        assembly (\"memory-safe\") {\n            r.slot := slot\n        }\n    }\n\n    /**\n     * @dev Returns an `BytesSlot` representation of the bytes storage pointer `store`.\n     */\n    function getBytesSlot(bytes storage store) internal pure returns (BytesSlot storage r) {\n        assembly (\"memory-safe\") {\n            r.slot := store.slot\n        }\n    }\n}\n",
+        "file": "@openzeppelin/contracts@5.6.1/utils/StorageSlot.sol"
+      }
+    }
+  },
+  "Cloud Traning/Tast2.sol": {
+    "__sources__": {
+      "Cloud Traning/Tast2.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.30;\r\n\r\n/*একটা Contract যেখানে:\r\n\r\n✅ প্রতিটা Student এর:\r\n   → নাম (string)\r\n   → বয়স (uint)\r\n   → pass হয়েছে কিনা (bool)\r\n\r\n✅ Student add করা যাবে\r\n✅ Student এর নাম দিয়ে বয়স পাওয়া যাবে\r\n✅ মোট কতজন Student আছে দেখা যাবে\r\n✅ সব Students এর নাম দেখা যাবে?*/\r\n\r\ncontract StudentID{\r\n    struct student{\r\n        string name;\r\n        uint age;\r\n        bool isPassed;\r\n    }\r\n    student[] public students;\r\n    mapping (string => uint) public NameToAge;\r\n\r\n    function addStudent(string memory _name, uint _age, bool _isPassed) public {\r\n        students.push(student({\r\n            name : _name,\r\n            age  : _age,\r\n            isPassed : _isPassed\r\n        }));\r\n        NameToAge[_name] = _age;\r\n    } \r\n    \r\n    function getStudentCount() public view returns (uint){\r\n        return students.length;\r\n    }\r\n\r\n    function getAllNames() public view returns (string[] memory) {\r\n\r\n        string[] memory names = new string[](students.length);\r\n\r\n        for (uint i = 0; i < students.length; i++) {\r\n             names[i] = students[i].name;\r\n        }\r\n        return names;\r\n}\r\n}",
+        "file": "Cloud Traning/Tast2.sol"
+      }
+    }
+  },
+  "Code Eater/FreelancerDataType.sol": {
+    "__sources__": {
+      "Code Eater/FreelancerDataType.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.34;\r\n\r\nstruct FreelancerPofile {\r\n    string name;\r\n    uint ID;\r\n    bool isActive;\r\n    uint experienceYear;\r\n    address wallet;\r\n}\r\n",
+        "file": "Code Eater/FreelancerDataType.sol"
+      }
+    }
+  },
+  "Code Eater/Types.sol": {
+    "__sources__": {
+      "Code Eater/Types.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.34;\r\n\r\nstruct FreelancerPofile {\r\n    string name;\r\n    uint ID;\r\n    bool isActive;\r\n    uint experienceYear;\r\n    address wallet;\r\n}\r\n",
+        "file": "Code Eater/Types.sol"
+      }
+    }
+  },
+  "Code Eater/Freelancer.sol": {
+    "./Type/DataType.sol": "Code Eater/Type/DataType.sol",
+    "__sources__": {
+      "Code Eater/Freelancer.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.34;\r\n\r\nimport {FreelancerPofile} from \"./Type/DataType.sol\";\r\n\r\ncontract FreelanceOpen {\r\n    address owner;\r\n    uint connectFee;\r\n\r\n    FreelancerPofile[ ] public freelancerProfiles;\r\n\r\n    constructor ( ) {\r\n        owner = msg.sender;\r\n    }\r\n\r\n    function register (string memory _name,  uint _experienceYear) external  {\r\n        \r\n        \r\n        freelancerProfiles.push(FreelancerPofile({\r\n        name    : _name,\r\n        ID : freelancerProfiles.length,\r\n        isActive : true,\r\n        experienceYear : _experienceYear,\r\n        wallet : msg.sender\r\n        }));\r\n    }\r\n\r\n    function getFreelancerProfileNumber () external view returns (uint){\r\n        return freelancerProfiles.length;\r\n    }\r\n\r\n    function getFreelancerProfiles () external view returns (FreelancerPofile[] memory){\r\n        return freelancerProfiles;\r\n    }\r\n\r\n}",
+        "file": "Code Eater/Freelancer.sol"
+      },
+      "Code Eater/Type/DataType.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.34;\r\n\r\nstruct FreelancerPofile {\r\n    string name;\r\n    uint ID;\r\n    bool isActive;\r\n    uint experienceYear;\r\n    address wallet;\r\n}\r\n",
+        "file": "Code Eater/Type/DataType.sol"
+      }
+    }
+  },
+  "Code Eater/Test/RmployerProfile.sol": {
+    "__sources__": {
+      "Code Eater/Test/RmployerProfile.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.34;\r\n\r\ncontract Employers {\r\n    address owner;\r\n\r\n    struct employee {\r\n        string name;\r\n        uint id;\r\n        bool inHaiard;\r\n        address wallet;\r\n    }\r\n\r\n    employee[] public employers;\r\n    mapping (uint => string) public idToName;\r\n\r\n    constructor () {\r\n        owner = msg.sender;\r\n    }\r\n\r\n    modifier onlyOwner {\r\n        require(msg.sender == owner, \"You Are Not Owner\");\r\n        _;\r\n    }\r\n\r\n    function registerEmployee (string memory _name, address _wallet) external onlyOwner{\r\n        employers.push(employee ({\r\n         name : _name,\r\n         id : employers.length,\r\n         inHaiard : true,\r\n         wallet : _wallet\r\n        }));\r\n        idToName[employers.length] = _name;\r\n    }\r\n\r\n    function getTotalEmployee () external view returns (uint) {\r\n        return employers.length;\r\n    }\r\n\r\n}",
+        "file": "Code Eater/Test/RmployerProfile.sol"
+      }
+    }
+  }
+}

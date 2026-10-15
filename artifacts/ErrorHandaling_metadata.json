@@ -1,0 +1,64 @@
+{
+	"compiler": {
+		"version": "0.8.34+commit.80d5c536"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"name": "notOwner",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_value",
+						"type": "uint256"
+					}
+				],
+				"name": "diposit",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"NoN Traning/ErrorHandaling.sol": "ErrorHandaling"
+		},
+		"evmVersion": "osaka",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"NoN Traning/ErrorHandaling.sol": {
+			"keccak256": "0x96e3310954a0fd0a0a7da4b9406bca20df5fc2937a23e6a43bb55b0a7385eb16",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://2c0ad941083551b6628f51e6462770be9be5718cab915f0e456c8ca11b9b2481",
+				"dweb:/ipfs/QmSoB1HLTESz7cU3DGajXyWqFPNBHQzvqTjEdwUM118Hj9"
+			]
+		}
+	},
+	"version": 1
+}

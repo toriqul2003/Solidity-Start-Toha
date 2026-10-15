@@ -1,0 +1,59 @@
+{
+	"compiler": {
+		"version": "0.8.34+commit.80d5c536"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"name": "getContractBalance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"NoN Traning/Advance1.sol": "Advance"
+		},
+		"evmVersion": "osaka",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"NoN Traning/Advance1.sol": {
+			"keccak256": "0x52da7bdead577096b382c97da477aadef3226827a7e012366e1aacfd9fb377fd",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://19ddd2051b72fbae5858b58128afd06759dcdfca5281cfb7be17f5ba5b4f5bce",
+				"dweb:/ipfs/QmWaEtkmhn81MhJtetrMesa5GmseXEfpQBJMnpRbeGHAhy"
+			]
+		}
+	},
+	"version": 1
+}
