@@ -16,10 +16,22 @@ struct jobListingInput {
     uint price;
 }
 
-struct jobListings {
+struct JobListing {
     uint id;
     string title;
     string jobDiscription;
     uint dedline;
     uint price; 
+    bool isOpen;
+    bool hasHierdFreelancer;
+    uint hierdFrelancerID;
+    bool isPaid;
 }
+
+struct employee {
+    string name;
+    uint id;
+    bool inHaiard;
+    address wallet;
+    JobListing [ ] jobListings;
+    }

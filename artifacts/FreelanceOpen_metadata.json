@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.37+commit.f401782d"
+		"version": "0.8.34+commit.80d5c536"
 	},
 	"language": "Solidity",
 	"output": {
@@ -267,11 +267,6 @@
 						"internalType": "string",
 						"name": "_name",
 						"type": "string"
-					},
-					{
-						"internalType": "address",
-						"name": "_wallet",
-						"type": "address"
 					}
 				],
 				"name": "registerEmployee",
@@ -301,26 +296,27 @@
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
-			"enabled": false,
+			"enabled": true,
 			"runs": 200
 		},
-		"remappings": []
+		"remappings": [],
+		"viaIR": true
 	},
 	"sources": {
 		"Code Eater/Freelancer.sol": {
-			"keccak256": "0x2a77c18991cdf081d8ad101554f7d565451aad1c9e4bee5f0a6656a2b1460a0e",
+			"keccak256": "0x2886d2f571fa98887f19fe8ec645fd3fc50f034dccba2670e2aa894ab7f83926",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://1ed733da40be0999b68059558f3f8914439ee099644a097ba117577d8263cd57",
-				"dweb:/ipfs/QmPpKP7K8wiQGRGNFWdqfrMmUKqcTJyGWTfhjkXvaByWgQ"
+				"bzz-raw://c624154ca282ee833581bd13f222398726c315cdccffb1779ca98a7a01e0f1c4",
+				"dweb:/ipfs/Qmcm9QAPVxZFD37fNNdHVXFqEi9tJJWUugq4RqoLbGUiBW"
 			]
 		},
 		"Code Eater/Type/DataType.sol": {
-			"keccak256": "0xec6acc004f4f43009c2c2cef67b20837afdd25bde9c23c5ea9dd369b6648c716",
+			"keccak256": "0xed217984be6b3a18e70fec08e65d10499dada06adbf26ee5eec615edb903bea8",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://e51d151f2e825dd7e40fc76ced1ca92a16a8e48a5248a5e4d486a39d34f3c7cb",
-				"dweb:/ipfs/QmTTCSdb5UeDNnE9PKdtJ2PzSrY8GaSd2uPAqXayefDWfU"
+				"bzz-raw://84b258a38815344120aa096d92a01124f01867c3a1f8e9eb7f143b6f37bffce0",
+				"dweb:/ipfs/QmXe1SP3VVBn1h6gyUHeo7JPbkrbNS7SZ4Dn12FFybciTK"
 			]
 		}
 	},

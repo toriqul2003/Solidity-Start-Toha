@@ -1,18 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.34;
 
-import {FreelancerPofile,jobListingInput} from "./Type/DataType.sol";
+import {FreelancerPofile,jobListingInput,JobListing,employee} from "./Type/DataType.sol";
 
 contract FreelanceOpen {
     address owner;
     uint connectFee;
-
-     struct employee {
-        string name;
-        uint id;
-        bool inHaiard;
-        address wallet;
-    }
 
     employee[] public employers;
     FreelancerPofile[ ] public freelancerProfiles;
@@ -33,12 +26,13 @@ contract FreelanceOpen {
     }
 
 
-    function registerEmployee (string memory _name, address _wallet) external {
+    function registerEmployee (string memory _name) external {
         employers.push(employee ({
          name : _name,
          id : employers.length,
          inHaiard : true,
-         wallet : _wallet
+         wallet : msg.sender,
+         jobListings : new JobListing[](0)
         }));
         idToAddress[employers.length] = msg.sender;
         emit registerProfile(employers.length, msg.sender);
@@ -71,6 +65,14 @@ contract FreelanceOpen {
         return freelancerProfiles;
     }
 
+    function _getEmployerProfile (uint employerID) internal view returns (employee memory){
+        return employers[employerID];
+    }
+
+    function getCreatedJobListing (uint employerID) public returns (uint){
+        return employers[employerID].jobListings.length;
+    }
+
     function creatJobListing (
         uint employerID, 
         jobListingInput memory jobListingInputs
@@ -78,6 +80,20 @@ contract FreelanceOpen {
             if (msg.value != jobListingInputs.price){
                 revert FreelancerOpen_IncorectFee (jobListingInputs.price, msg.value);
             }
+            employee memory Employer = _getEmployerProfile(employerID);
+            uint jobID = getCreatedJobListing(employerID);
+
+            JobListing memory jobListing = JobListing ({
+                id :jobID,
+                title : JobListing.title,
+                jobDiscription :JobListing.jobDiscription,
+                dedline : JobListing.dedline,
+                price : JobListing.price,
+                isOpen : true,
+                hasHierdFreelancer : false,
+                hierdFrelancerID :0,
+                isPaid :false
+            });
         }
 
 }
