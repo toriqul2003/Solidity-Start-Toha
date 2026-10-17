@@ -9,25 +9,6 @@ struct FreelancerPofile {
     address wallet;
 }
 
-struct jobListingInput {
-    string title;
-    string jobDiscription;
-    uint dedline;
-    uint price;
-}
-
-struct JobListing {
-    uint id;
-    string title;
-    string jobDiscription;
-    uint dedline;
-    uint price; 
-    bool isOpen;
-    bool hasHierdFreelancer;
-    uint hierdFrelancerID;
-    bool isPaid;
-}
-
 struct employee {
     string name;
     uint id;
@@ -35,3 +16,23 @@ struct employee {
     address wallet;
     JobListing [ ] jobListings;
     }
+
+struct jobListingInput {
+    string title;
+    string jobDiscription;
+    uint dedlineTimestamp;
+    uint price;
+}
+
+struct JobListing {
+    uint id;
+    string title;
+    string jobDiscription;
+    uint dedlineTimestamp;
+    uint price; 
+    bool isOpen;
+    bool hasHierdFreelancer;
+    uint hierdFrelancerID;
+    bool isPaid;
+}
+

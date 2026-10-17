@@ -66,7 +66,7 @@
 							},
 							{
 								"internalType": "uint256",
-								"name": "dedline",
+								"name": "dedlineTimestamp",
 								"type": "uint256"
 							},
 							{
@@ -76,13 +76,32 @@
 							}
 						],
 						"internalType": "struct jobListingInput",
-						"name": "jobListingInputs",
+						"name": "_jobListingInputs",
 						"type": "tuple"
 					}
 				],
 				"name": "creatJobListing",
 				"outputs": [],
 				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "employeridToAddress",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -159,6 +178,25 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "freelanceridToAddress",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "getFreelancerProfileNumber",
 				"outputs": [
@@ -212,6 +250,25 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "employerID",
+						"type": "uint256"
+					}
+				],
+				"name": "getNumberOfCreatedJobList",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "getTotalEmployee",
 				"outputs": [
@@ -227,20 +284,14 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
+						"internalType": "string",
+						"name": "_name",
+						"type": "string"
 					}
 				],
-				"name": "idToAddress",
-				"outputs": [
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"stateMutability": "view",
+				"name": "registerEmployee",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -256,20 +307,7 @@
 						"type": "uint256"
 					}
 				],
-				"name": "register",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "string",
-						"name": "_name",
-						"type": "string"
-					}
-				],
-				"name": "registerEmployee",
+				"name": "registerFreelancer",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -304,19 +342,19 @@
 	},
 	"sources": {
 		"Code Eater/Freelancer.sol": {
-			"keccak256": "0x2886d2f571fa98887f19fe8ec645fd3fc50f034dccba2670e2aa894ab7f83926",
+			"keccak256": "0x1c112ff72b531ebd949a55aef3dfcb3ca8dccfe2b1b2d0063eb61ebd45479fa8",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://c624154ca282ee833581bd13f222398726c315cdccffb1779ca98a7a01e0f1c4",
-				"dweb:/ipfs/Qmcm9QAPVxZFD37fNNdHVXFqEi9tJJWUugq4RqoLbGUiBW"
+				"bzz-raw://1dcfdffb8efaaafeaa31c7cb6dff304c44cd88567c8a105033ddd75eacbf0310",
+				"dweb:/ipfs/QmZwFm7TBC4qU2U1hxEk9oPxrd5GF8tDst7s9vzuhVYaE3"
 			]
 		},
 		"Code Eater/Type/DataType.sol": {
-			"keccak256": "0xed217984be6b3a18e70fec08e65d10499dada06adbf26ee5eec615edb903bea8",
+			"keccak256": "0x3ccc7ca6f69865e34645bf71ffd85ee716d590469f7492f68b0ac2558590c46a",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://84b258a38815344120aa096d92a01124f01867c3a1f8e9eb7f143b6f37bffce0",
-				"dweb:/ipfs/QmXe1SP3VVBn1h6gyUHeo7JPbkrbNS7SZ4Dn12FFybciTK"
+				"bzz-raw://26411aa97ee80502588ea87a9290d115e80a966768cb857612b1cd0367b6c2dd",
+				"dweb:/ipfs/QmayteDpkqn2qERkNuGUXqqrWgnH5vVmdgzsCttMFo3Eab"
 			]
 		}
 	},

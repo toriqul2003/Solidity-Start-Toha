@@ -10,7 +10,8 @@ contract FreelanceOpen {
     employee[] public employers;
     FreelancerPofile[ ] public freelancerProfiles;
 
-    mapping (uint => address) public idToAddress;
+    mapping (uint => address) public freelanceridToAddress;
+    mapping (uint => address) public employeridToAddress;
 
     event registerProfile (uint indexed id, address indexed caller);
 
@@ -34,7 +35,7 @@ contract FreelanceOpen {
          wallet : msg.sender,
          jobListings : new JobListing[](0)
         }));
-        idToAddress[employers.length] = msg.sender;
+        employeridToAddress[employers.length] = msg.sender;
         emit registerProfile(employers.length, msg.sender);
     }
 
@@ -42,8 +43,7 @@ contract FreelanceOpen {
         return employers.length;
     }
 
-    function register (string memory _name,  uint _experienceYear) external  {
-        
+    function registerFreelancer (string memory _name,  uint _experienceYear) external  {
         
         freelancerProfiles.push(FreelancerPofile({
         name    : _name,
@@ -52,7 +52,7 @@ contract FreelanceOpen {
         experienceYear : _experienceYear,
         wallet : msg.sender
         }));
-        idToAddress[freelancerProfiles.length] = msg.sender;
+        freelanceridToAddress[freelancerProfiles.length] = msg.sender;
 
         emit registerProfile(freelancerProfiles.length, msg.sender);
     }
@@ -65,35 +65,37 @@ contract FreelanceOpen {
         return freelancerProfiles;
     }
 
-    function _getEmployerProfile (uint employerID) internal view returns (employee memory){
+    function _getEmployerProfiles (uint employerID) internal view returns (employee storage){
         return employers[employerID];
     }
 
-    function getCreatedJobListing (uint employerID) public returns (uint){
-        return employers[employerID].jobListings.length;
+    function getNumberOfCreatedJobList (uint employerID) public  view returns (uint){
+       return employers[employerID].jobListings.length;
     }
 
-    function creatJobListing (
-        uint employerID, 
-        jobListingInput memory jobListingInputs
-        ) external  payable  {
-            if (msg.value != jobListingInputs.price){
-                revert FreelancerOpen_IncorectFee (jobListingInputs.price, msg.value);
-            }
-            employee memory Employer = _getEmployerProfile(employerID);
-            uint jobID = getCreatedJobListing(employerID);
 
-            JobListing memory jobListing = JobListing ({
-                id :jobID,
-                title : JobListing.title,
-                jobDiscription :JobListing.jobDiscription,
-                dedline : JobListing.dedline,
-                price : JobListing.price,
+    function creatJobListing (uint employerID, jobListingInput memory _jobListingInputs) external payable {
+            if (msg.value != _jobListingInputs.price){
+                revert FreelancerOpen_IncorectFee (_jobListingInputs.price, msg.value);
+            }
+            employee storage employerProbile = _getEmployerProfiles(employerID);
+            
+            uint JobID = getNumberOfCreatedJobList(employerID);
+
+            JobListing memory newJob = JobListing({
+                id :JobID,
+                title : _jobListingInputs.title,
+                jobDiscription : _jobListingInputs.jobDiscription,
+                dedlineTimestamp : _jobListingInputs.dedlineTimestamp,
+                price : _jobListingInputs.price,
                 isOpen : true,
                 hasHierdFreelancer : false,
-                hierdFrelancerID :0,
-                isPaid :false
+                hierdFrelancerID : 0,
+                isPaid : false
             });
+
+            employerProbile.jobListings.push(newJob);
+           
         }
 
 }

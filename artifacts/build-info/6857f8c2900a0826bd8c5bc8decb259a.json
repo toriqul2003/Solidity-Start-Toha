@@ -1,5 +1,5 @@
 {
-	"id": "e53c3dd72345431ede23b7776330d3ab",
+	"id": "6857f8c2900a0826bd8c5bc8decb259a",
 	"_format": "hh-sol-build-info-1",
 	"solcVersion": "0.8.34",
 	"solcLongVersion": "0.8.34+commit.80d5c536",
@@ -35,7 +35,7 @@
 		},
 		"sources": {
 			"Code Eater/Type/DataType.sol": {
-				"content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.34;\r\n\r\nstruct FreelancerPofile {\r\n    string name;\r\n    uint ID;\r\n    bool isActive;\r\n    uint experienceYear;\r\n    address wallet;\r\n}\r\n\r\nstruct jobListingInput {\r\n    string title;\r\n    string jobDiscription;\r\n    uint dedline;\r\n    uint price;\r\n}\r\n\r\nstruct JobListing {\r\n    uint id;\r\n    string title;\r\n    string jobDiscription;\r\n    uint dedline;\r\n    uint price; \r\n    bool isOpen;\r\n    bool hasHierdFreelancer;\r\n    uint hierdFrelancerID;\r\n    bool isPaid;\r\n}\r\n\r\nstruct employee {\r\n    string name;\r\n    uint id;\r\n    bool inHaiard;\r\n    address wallet;\r\n    JobListing [ ] jobListings;\r\n    }"
+				"content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.34;\r\n\r\nstruct FreelancerPofile {\r\n    string name;\r\n    uint ID;\r\n    bool isActive;\r\n    uint experienceYear;\r\n    address wallet;\r\n}\r\n\r\nstruct employee {\r\n    string name;\r\n    uint id;\r\n    bool inHaiard;\r\n    address wallet;\r\n    JobListing [ ] jobListings;\r\n    }\r\n\r\nstruct jobListingInput {\r\n    string title;\r\n    string jobDiscription;\r\n    uint dedlineTimestamp;\r\n    uint price;\r\n}\r\n\r\nstruct JobListing {\r\n    uint id;\r\n    string title;\r\n    string jobDiscription;\r\n    uint dedlineTimestamp;\r\n    uint price; \r\n    bool isOpen;\r\n    bool hasHierdFreelancer;\r\n    uint hierdFrelancerID;\r\n    bool isPaid;\r\n}\r\n\r\n"
 			}
 		}
 	},
@@ -49,13 +49,13 @@
 							12
 						],
 						"JobListing": [
-							40
-						],
-						"employee": [
 							53
 						],
+						"employee": [
+							25
+						],
 						"jobListingInput": [
-							21
+							34
 						]
 					},
 					"id": 54,
@@ -222,18 +222,18 @@
 							"visibility": "public"
 						},
 						{
-							"canonicalName": "jobListingInput",
-							"id": 21,
+							"canonicalName": "employee",
+							"id": 25,
 							"members": [
 								{
 									"constant": false,
 									"id": 14,
 									"mutability": "mutable",
-									"name": "title",
-									"nameLocation": "229:5:0",
+									"name": "name",
+									"nameLocation": "222:4:0",
 									"nodeType": "VariableDeclaration",
-									"scope": 21,
-									"src": "222:12:0",
+									"scope": 25,
+									"src": "215:11:0",
 									"stateVariable": false,
 									"storageLocation": "default",
 									"typeDescriptions": {
@@ -244,7 +244,7 @@
 										"id": 13,
 										"name": "string",
 										"nodeType": "ElementaryTypeName",
-										"src": "222:6:0",
+										"src": "215:6:0",
 										"typeDescriptions": {
 											"typeIdentifier": "t_string_storage_ptr",
 											"typeString": "string"
@@ -256,25 +256,25 @@
 									"constant": false,
 									"id": 16,
 									"mutability": "mutable",
-									"name": "jobDiscription",
-									"nameLocation": "248:14:0",
+									"name": "id",
+									"nameLocation": "238:2:0",
 									"nodeType": "VariableDeclaration",
-									"scope": 21,
-									"src": "241:21:0",
+									"scope": 25,
+									"src": "233:7:0",
 									"stateVariable": false,
 									"storageLocation": "default",
 									"typeDescriptions": {
-										"typeIdentifier": "t_string_storage_ptr",
-										"typeString": "string"
+										"typeIdentifier": "t_uint256",
+										"typeString": "uint256"
 									},
 									"typeName": {
 										"id": 15,
-										"name": "string",
+										"name": "uint",
 										"nodeType": "ElementaryTypeName",
-										"src": "241:6:0",
+										"src": "233:4:0",
 										"typeDescriptions": {
-											"typeIdentifier": "t_string_storage_ptr",
-											"typeString": "string"
+											"typeIdentifier": "t_uint256",
+											"typeString": "uint256"
 										}
 									},
 									"visibility": "internal"
@@ -283,25 +283,25 @@
 									"constant": false,
 									"id": 18,
 									"mutability": "mutable",
-									"name": "dedline",
-									"nameLocation": "274:7:0",
+									"name": "inHaiard",
+									"nameLocation": "252:8:0",
 									"nodeType": "VariableDeclaration",
-									"scope": 21,
-									"src": "269:12:0",
+									"scope": 25,
+									"src": "247:13:0",
 									"stateVariable": false,
 									"storageLocation": "default",
 									"typeDescriptions": {
-										"typeIdentifier": "t_uint256",
-										"typeString": "uint256"
+										"typeIdentifier": "t_bool",
+										"typeString": "bool"
 									},
 									"typeName": {
 										"id": 17,
-										"name": "uint",
+										"name": "bool",
 										"nodeType": "ElementaryTypeName",
-										"src": "269:4:0",
+										"src": "247:4:0",
 										"typeDescriptions": {
-											"typeIdentifier": "t_uint256",
-											"typeString": "uint256"
+											"typeIdentifier": "t_bool",
+											"typeString": "bool"
 										}
 									},
 									"visibility": "internal"
@@ -310,104 +310,97 @@
 									"constant": false,
 									"id": 20,
 									"mutability": "mutable",
-									"name": "price",
-									"nameLocation": "293:5:0",
+									"name": "wallet",
+									"nameLocation": "275:6:0",
 									"nodeType": "VariableDeclaration",
-									"scope": 21,
-									"src": "288:10:0",
+									"scope": 25,
+									"src": "267:14:0",
 									"stateVariable": false,
 									"storageLocation": "default",
 									"typeDescriptions": {
-										"typeIdentifier": "t_uint256",
-										"typeString": "uint256"
+										"typeIdentifier": "t_address",
+										"typeString": "address"
 									},
 									"typeName": {
 										"id": 19,
-										"name": "uint",
+										"name": "address",
 										"nodeType": "ElementaryTypeName",
-										"src": "288:4:0",
+										"src": "267:7:0",
+										"stateMutability": "nonpayable",
 										"typeDescriptions": {
-											"typeIdentifier": "t_uint256",
-											"typeString": "uint256"
+											"typeIdentifier": "t_address",
+											"typeString": "address"
+										}
+									},
+									"visibility": "internal"
+								},
+								{
+									"constant": false,
+									"id": 24,
+									"mutability": "mutable",
+									"name": "jobListings",
+									"nameLocation": "303:11:0",
+									"nodeType": "VariableDeclaration",
+									"scope": 25,
+									"src": "288:26:0",
+									"stateVariable": false,
+									"storageLocation": "default",
+									"typeDescriptions": {
+										"typeIdentifier": "t_array$_t_struct$_JobListing_$53_storage_$dyn_storage_ptr",
+										"typeString": "struct JobListing[]"
+									},
+									"typeName": {
+										"baseType": {
+											"id": 22,
+											"nodeType": "UserDefinedTypeName",
+											"pathNode": {
+												"id": 21,
+												"name": "JobListing",
+												"nameLocations": [
+													"288:10:0"
+												],
+												"nodeType": "IdentifierPath",
+												"referencedDeclaration": 53,
+												"src": "288:10:0"
+											},
+											"referencedDeclaration": 53,
+											"src": "288:10:0",
+											"typeDescriptions": {
+												"typeIdentifier": "t_struct$_JobListing_$53_storage_ptr",
+												"typeString": "struct JobListing"
+											}
+										},
+										"id": 23,
+										"nodeType": "ArrayTypeName",
+										"src": "288:14:0",
+										"typeDescriptions": {
+											"typeIdentifier": "t_array$_t_struct$_JobListing_$53_storage_$dyn_storage_ptr",
+											"typeString": "struct JobListing[]"
 										}
 									},
 									"visibility": "internal"
 								}
 							],
-							"name": "jobListingInput",
-							"nameLocation": "199:15:0",
+							"name": "employee",
+							"nameLocation": "199:8:0",
 							"nodeType": "StructDefinition",
 							"scope": 54,
-							"src": "192:110:0",
+							"src": "192:130:0",
 							"visibility": "public"
 						},
 						{
-							"canonicalName": "JobListing",
-							"id": 40,
+							"canonicalName": "jobListingInput",
+							"id": 34,
 							"members": [
-								{
-									"constant": false,
-									"id": 23,
-									"mutability": "mutable",
-									"name": "id",
-									"nameLocation": "336:2:0",
-									"nodeType": "VariableDeclaration",
-									"scope": 40,
-									"src": "331:7:0",
-									"stateVariable": false,
-									"storageLocation": "default",
-									"typeDescriptions": {
-										"typeIdentifier": "t_uint256",
-										"typeString": "uint256"
-									},
-									"typeName": {
-										"id": 22,
-										"name": "uint",
-										"nodeType": "ElementaryTypeName",
-										"src": "331:4:0",
-										"typeDescriptions": {
-											"typeIdentifier": "t_uint256",
-											"typeString": "uint256"
-										}
-									},
-									"visibility": "internal"
-								},
-								{
-									"constant": false,
-									"id": 25,
-									"mutability": "mutable",
-									"name": "title",
-									"nameLocation": "352:5:0",
-									"nodeType": "VariableDeclaration",
-									"scope": 40,
-									"src": "345:12:0",
-									"stateVariable": false,
-									"storageLocation": "default",
-									"typeDescriptions": {
-										"typeIdentifier": "t_string_storage_ptr",
-										"typeString": "string"
-									},
-									"typeName": {
-										"id": 24,
-										"name": "string",
-										"nodeType": "ElementaryTypeName",
-										"src": "345:6:0",
-										"typeDescriptions": {
-											"typeIdentifier": "t_string_storage_ptr",
-											"typeString": "string"
-										}
-									},
-									"visibility": "internal"
-								},
 								{
 									"constant": false,
 									"id": 27,
 									"mutability": "mutable",
-									"name": "jobDiscription",
-									"nameLocation": "371:14:0",
+									"name": "title",
+									"nameLocation": "363:5:0",
 									"nodeType": "VariableDeclaration",
-									"scope": 40,
-									"src": "364:21:0",
+									"scope": 34,
+									"src": "356:12:0",
 									"stateVariable": false,
 									"storageLocation": "default",
 									"typeDescriptions": {
@@ -418,7 +411,7 @@
 										"id": 26,
 										"name": "string",
 										"nodeType": "ElementaryTypeName",
-										"src": "364:6:0",
+										"src": "356:6:0",
 										"typeDescriptions": {
 											"typeIdentifier": "t_string_storage_ptr",
 											"typeString": "string"
@@ -430,25 +423,25 @@
 									"constant": false,
 									"id": 29,
 									"mutability": "mutable",
-									"name": "dedline",
-									"nameLocation": "397:7:0",
+									"name": "jobDiscription",
+									"nameLocation": "382:14:0",
 									"nodeType": "VariableDeclaration",
-									"scope": 40,
-									"src": "392:12:0",
+									"scope": 34,
+									"src": "375:21:0",
 									"stateVariable": false,
 									"storageLocation": "default",
 									"typeDescriptions": {
-										"typeIdentifier": "t_uint256",
-										"typeString": "uint256"
+										"typeIdentifier": "t_string_storage_ptr",
+										"typeString": "string"
 									},
 									"typeName": {
 										"id": 28,
-										"name": "uint",
+										"name": "string",
 										"nodeType": "ElementaryTypeName",
-										"src": "392:4:0",
+										"src": "375:6:0",
 										"typeDescriptions": {
-											"typeIdentifier": "t_uint256",
-											"typeString": "uint256"
+											"typeIdentifier": "t_string_storage_ptr",
+											"typeString": "string"
 										}
 									},
 									"visibility": "internal"
@@ -457,11 +450,11 @@
 									"constant": false,
 									"id": 31,
 									"mutability": "mutable",
-									"name": "price",
-									"nameLocation": "416:5:0",
+									"name": "dedlineTimestamp",
+									"nameLocation": "408:16:0",
 									"nodeType": "VariableDeclaration",
-									"scope": 40,
-									"src": "411:10:0",
+									"scope": 34,
+									"src": "403:21:0",
 									"stateVariable": false,
 									"storageLocation": "default",
 									"typeDescriptions": {
@@ -472,7 +465,7 @@
 										"id": 30,
 										"name": "uint",
 										"nodeType": "ElementaryTypeName",
-										"src": "411:4:0",
+										"src": "403:4:0",
 										"typeDescriptions": {
 											"typeIdentifier": "t_uint256",
 											"typeString": "uint256"
@@ -484,65 +477,11 @@
 									"constant": false,
 									"id": 33,
 									"mutability": "mutable",
-									"name": "isOpen",
-									"nameLocation": "434:6:0",
+									"name": "price",
+									"nameLocation": "436:5:0",
 									"nodeType": "VariableDeclaration",
-									"scope": 40,
-									"src": "429:11:0",
-									"stateVariable": false,
-									"storageLocation": "default",
-									"typeDescriptions": {
-										"typeIdentifier": "t_bool",
-										"typeString": "bool"
-									},
-									"typeName": {
-										"id": 32,
-										"name": "bool",
-										"nodeType": "ElementaryTypeName",
-										"src": "429:4:0",
-										"typeDescriptions": {
-											"typeIdentifier": "t_bool",
-											"typeString": "bool"
-										}
-									},
-									"visibility": "internal"
-								},
-								{
-									"constant": false,
-									"id": 35,
-									"mutability": "mutable",
-									"name": "hasHierdFreelancer",
-									"nameLocation": "452:18:0",
-									"nodeType": "VariableDeclaration",
-									"scope": 40,
-									"src": "447:23:0",
-									"stateVariable": false,
-									"storageLocation": "default",
-									"typeDescriptions": {
-										"typeIdentifier": "t_bool",
-										"typeString": "bool"
-									},
-									"typeName": {
-										"id": 34,
-										"name": "bool",
-										"nodeType": "ElementaryTypeName",
-										"src": "447:4:0",
-										"typeDescriptions": {
-											"typeIdentifier": "t_bool",
-											"typeString": "bool"
-										}
-									},
-									"visibility": "internal"
-								},
-								{
-									"constant": false,
-									"id": 37,
-									"mutability": "mutable",
-									"name": "hierdFrelancerID",
-									"nameLocation": "482:16:0",
-									"nodeType": "VariableDeclaration",
-									"scope": 40,
-									"src": "477:21:0",
+									"scope": 34,
+									"src": "431:10:0",
 									"stateVariable": false,
 									"storageLocation": "default",
 									"typeDescriptions": {
@@ -550,10 +489,49 @@
 										"typeString": "uint256"
 									},
 									"typeName": {
-										"id": 36,
+										"id": 32,
 										"name": "uint",
 										"nodeType": "ElementaryTypeName",
-										"src": "477:4:0",
+										"src": "431:4:0",
+										"typeDescriptions": {
+											"typeIdentifier": "t_uint256",
+											"typeString": "uint256"
+										}
+									},
+									"visibility": "internal"
+								}
+							],
+							"name": "jobListingInput",
+							"nameLocation": "333:15:0",
+							"nodeType": "StructDefinition",
+							"scope": 54,
+							"src": "326:119:0",
+							"visibility": "public"
+						},
+						{
+							"canonicalName": "JobListing",
+							"id": 53,
+							"members": [
+								{
+									"constant": false,
+									"id": 36,
+									"mutability": "mutable",
+									"name": "id",
+									"nameLocation": "479:2:0",
+									"nodeType": "VariableDeclaration",
+									"scope": 53,
+									"src": "474:7:0",
+									"stateVariable": false,
+									"storageLocation": "default",
+									"typeDescriptions": {
+										"typeIdentifier": "t_uint256",
+										"typeString": "uint256"
+									},
+									"typeName": {
+										"id": 35,
+										"name": "uint",
+										"nodeType": "ElementaryTypeName",
+										"src": "474:4:0",
 										"typeDescriptions": {
 											"typeIdentifier": "t_uint256",
 											"typeString": "uint256"
@@ -563,52 +541,13 @@
 								},
 								{
 									"constant": false,
-									"id": 39,
+									"id": 38,
 									"mutability": "mutable",
-									"name": "isPaid",
-									"nameLocation": "510:6:0",
-									"nodeType": "VariableDeclaration",
-									"scope": 40,
-									"src": "505:11:0",
-									"stateVariable": false,
-									"storageLocation": "default",
-									"typeDescriptions": {
-										"typeIdentifier": "t_bool",
-										"typeString": "bool"
-									},
-									"typeName": {
-										"id": 38,
-										"name": "bool",
-										"nodeType": "ElementaryTypeName",
-										"src": "505:4:0",
-										"typeDescriptions": {
-											"typeIdentifier": "t_bool",
-											"typeString": "bool"
-										}
-									},
-									"visibility": "internal"
-								}
-							],
-							"name": "JobListing",
-							"nameLocation": "313:10:0",
-							"nodeType": "StructDefinition",
-							"scope": 54,
-							"src": "306:214:0",
-							"visibility": "public"
-						},
-						{
-							"canonicalName": "employee",
-							"id": 53,
-							"members": [
-								{
-									"constant": false,
-									"id": 42,
-									"mutability": "mutable",
-									"name": "name",
-									"nameLocation": "554:4:0",
+									"name": "title",
+									"nameLocation": "495:5:0",
 									"nodeType": "VariableDeclaration",
 									"scope": 53,
-									"src": "547:11:0",
+									"src": "488:12:0",
 									"stateVariable": false,
 									"storageLocation": "default",
 									"typeDescriptions": {
@@ -616,10 +555,10 @@
 										"typeString": "string"
 									},
 									"typeName": {
-										"id": 41,
+										"id": 37,
 										"name": "string",
 										"nodeType": "ElementaryTypeName",
-										"src": "547:6:0",
+										"src": "488:6:0",
 										"typeDescriptions": {
 											"typeIdentifier": "t_string_storage_ptr",
 											"typeString": "string"
@@ -629,13 +568,67 @@
 								},
 								{
 									"constant": false,
-									"id": 44,
+									"id": 40,
 									"mutability": "mutable",
-									"name": "id",
-									"nameLocation": "570:2:0",
+									"name": "jobDiscription",
+									"nameLocation": "514:14:0",
 									"nodeType": "VariableDeclaration",
 									"scope": 53,
-									"src": "565:7:0",
+									"src": "507:21:0",
+									"stateVariable": false,
+									"storageLocation": "default",
+									"typeDescriptions": {
+										"typeIdentifier": "t_string_storage_ptr",
+										"typeString": "string"
+									},
+									"typeName": {
+										"id": 39,
+										"name": "string",
+										"nodeType": "ElementaryTypeName",
+										"src": "507:6:0",
+										"typeDescriptions": {
+											"typeIdentifier": "t_string_storage_ptr",
+											"typeString": "string"
+										}
+									},
+									"visibility": "internal"
+								},
+								{
+									"constant": false,
+									"id": 42,
+									"mutability": "mutable",
+									"name": "dedlineTimestamp",
+									"nameLocation": "540:16:0",
+									"nodeType": "VariableDeclaration",
+									"scope": 53,
+									"src": "535:21:0",
+									"stateVariable": false,
+									"storageLocation": "default",
+									"typeDescriptions": {
+										"typeIdentifier": "t_uint256",
+										"typeString": "uint256"
+									},
+									"typeName": {
+										"id": 41,
+										"name": "uint",
+										"nodeType": "ElementaryTypeName",
+										"src": "535:4:0",
+										"typeDescriptions": {
+											"typeIdentifier": "t_uint256",
+											"typeString": "uint256"
+										}
+									},
+									"visibility": "internal"
+								},
+								{
+									"constant": false,
+									"id": 44,
+									"mutability": "mutable",
+									"name": "price",
+									"nameLocation": "568:5:0",
+									"nodeType": "VariableDeclaration",
+									"scope": 53,
+									"src": "563:10:0",
 									"stateVariable": false,
 									"storageLocation": "default",
 									"typeDescriptions": {
@@ -646,7 +639,7 @@
 										"id": 43,
 										"name": "uint",
 										"nodeType": "ElementaryTypeName",
-										"src": "565:4:0",
+										"src": "563:4:0",
 										"typeDescriptions": {
 											"typeIdentifier": "t_uint256",
 											"typeString": "uint256"
@@ -658,11 +651,11 @@
 									"constant": false,
 									"id": 46,
 									"mutability": "mutable",
-									"name": "inHaiard",
-									"nameLocation": "584:8:0",
+									"name": "isOpen",
+									"nameLocation": "586:6:0",
 									"nodeType": "VariableDeclaration",
 									"scope": 53,
-									"src": "579:13:0",
+									"src": "581:11:0",
 									"stateVariable": false,
 									"storageLocation": "default",
 									"typeDescriptions": {
@@ -673,7 +666,7 @@
 										"id": 45,
 										"name": "bool",
 										"nodeType": "ElementaryTypeName",
-										"src": "579:4:0",
+										"src": "581:4:0",
 										"typeDescriptions": {
 											"typeIdentifier": "t_bool",
 											"typeString": "bool"
@@ -685,26 +678,52 @@
 									"constant": false,
 									"id": 48,
 									"mutability": "mutable",
-									"name": "wallet",
-									"nameLocation": "607:6:0",
+									"name": "hasHierdFreelancer",
+									"nameLocation": "604:18:0",
 									"nodeType": "VariableDeclaration",
 									"scope": 53,
-									"src": "599:14:0",
+									"src": "599:23:0",
 									"stateVariable": false,
 									"storageLocation": "default",
 									"typeDescriptions": {
-										"typeIdentifier": "t_address",
-										"typeString": "address"
+										"typeIdentifier": "t_bool",
+										"typeString": "bool"
 									},
 									"typeName": {
 										"id": 47,
-										"name": "address",
+										"name": "bool",
 										"nodeType": "ElementaryTypeName",
-										"src": "599:7:0",
-										"stateMutability": "nonpayable",
+										"src": "599:4:0",
 										"typeDescriptions": {
-											"typeIdentifier": "t_address",
-											"typeString": "address"
+											"typeIdentifier": "t_bool",
+											"typeString": "bool"
+										}
+									},
+									"visibility": "internal"
+								},
+								{
+									"constant": false,
+									"id": 50,
+									"mutability": "mutable",
+									"name": "hierdFrelancerID",
+									"nameLocation": "634:16:0",
+									"nodeType": "VariableDeclaration",
+									"scope": 53,
+									"src": "629:21:0",
+									"stateVariable": false,
+									"storageLocation": "default",
+									"typeDescriptions": {
+										"typeIdentifier": "t_uint256",
+										"typeString": "uint256"
+									},
+									"typeName": {
+										"id": 49,
+										"name": "uint",
+										"nodeType": "ElementaryTypeName",
+										"src": "629:4:0",
+										"typeDescriptions": {
+											"typeIdentifier": "t_uint256",
+											"typeString": "uint256"
 										}
 									},
 									"visibility": "internal"
@@ -713,58 +732,39 @@
 									"constant": false,
 									"id": 52,
 									"mutability": "mutable",
-									"name": "jobListings",
-									"nameLocation": "635:11:0",
+									"name": "isPaid",
+									"nameLocation": "662:6:0",
 									"nodeType": "VariableDeclaration",
 									"scope": 53,
-									"src": "620:26:0",
+									"src": "657:11:0",
 									"stateVariable": false,
 									"storageLocation": "default",
 									"typeDescriptions": {
-										"typeIdentifier": "t_array$_t_struct$_JobListing_$40_storage_$dyn_storage_ptr",
-										"typeString": "struct JobListing[]"
+										"typeIdentifier": "t_bool",
+										"typeString": "bool"
 									},
 									"typeName": {
-										"baseType": {
-											"id": 50,
-											"nodeType": "UserDefinedTypeName",
-											"pathNode": {
-												"id": 49,
-												"name": "JobListing",
-												"nameLocations": [
-													"620:10:0"
-												],
-												"nodeType": "IdentifierPath",
-												"referencedDeclaration": 40,
-												"src": "620:10:0"
-											},
-											"referencedDeclaration": 40,
-											"src": "620:10:0",
-											"typeDescriptions": {
-												"typeIdentifier": "t_struct$_JobListing_$40_storage_ptr",
-												"typeString": "struct JobListing"
-											}
-										},
 										"id": 51,
-										"nodeType": "ArrayTypeName",
-										"src": "620:14:0",
+										"name": "bool",
+										"nodeType": "ElementaryTypeName",
+										"src": "657:4:0",
 										"typeDescriptions": {
-											"typeIdentifier": "t_array$_t_struct$_JobListing_$40_storage_$dyn_storage_ptr",
-											"typeString": "struct JobListing[]"
+											"typeIdentifier": "t_bool",
+											"typeString": "bool"
 										}
 									},
 									"visibility": "internal"
 								}
 							],
-							"name": "employee",
-							"nameLocation": "531:8:0",
+							"name": "JobListing",
+							"nameLocation": "456:10:0",
 							"nodeType": "StructDefinition",
 							"scope": 54,
-							"src": "524:130:0",
+							"src": "449:223:0",
 							"visibility": "public"
 						}
 					],
-					"src": "33:621:0"
+					"src": "33:643:0"
 				},
 				"id": 0
 			}
