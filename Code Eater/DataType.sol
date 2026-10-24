@@ -12,7 +12,7 @@ struct FreelancerPofile {
 struct employee {
     string name;
     uint id;
-    bool inHaiard;
+    bool hasHaiard;
     address wallet;
     JobListing [ ] jobListings;
     }

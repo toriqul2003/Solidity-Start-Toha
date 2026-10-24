@@ -14,6 +14,17 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
+						"name": "JobID",
+						"type": "uint256"
+					}
+				],
+				"name": "AlradyPaid",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
 						"name": "expectedFee",
 						"type": "uint256"
 					},
@@ -23,7 +34,130 @@
 						"type": "uint256"
 					}
 				],
-				"name": "FreelancerOpen_IncorectFee",
+				"name": "IncorectFee",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "caller",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "frelancerID",
+						"type": "uint256"
+					}
+				],
+				"name": "IncorectFrelancerID",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "employerID",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "JobID",
+						"type": "uint256"
+					}
+				],
+				"name": "IncorectJobID",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "ProvidedID",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "ActualID",
+						"type": "uint256"
+					}
+				],
+				"name": "IncorrectFreelancerID",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "JobID",
+						"type": "uint256"
+					}
+				],
+				"name": "JobClosed",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "expectedBalance",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "haveBalance",
+						"type": "uint256"
+					}
+				],
+				"name": "NotEnoughBalance",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "caller",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "employerID",
+						"type": "uint256"
+					}
+				],
+				"name": "UnothorizedEmployer",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "freelancer",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "paymentFailed",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "employerAddress",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "withdrowFailed",
 				"type": "error"
 			},
 			{
@@ -44,6 +178,45 @@
 				],
 				"name": "registerProfile",
 				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "BPS_DOMINATOR",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "LATE_PENALTY_BPS_PER_DAY",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "changeOwner",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
 			},
 			{
 				"inputs": [
@@ -93,6 +266,25 @@
 						"type": "uint256"
 					}
 				],
+				"name": "employerBalance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
 				"name": "employeridToAddress",
 				"outputs": [
 					{
@@ -126,7 +318,7 @@
 					},
 					{
 						"internalType": "bool",
-						"name": "inHaiard",
+						"name": "hasHaiard",
 						"type": "bool"
 					},
 					{
@@ -198,19 +390,6 @@
 			},
 			{
 				"inputs": [],
-				"name": "getFreelancerProfileNumber",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
 				"name": "getFreelancerProfiles",
 				"outputs": [
 					{
@@ -257,6 +436,72 @@
 						"type": "uint256"
 					}
 				],
+				"name": "getJobList",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "id",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "title",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "jobDiscription",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "dedlineTimestamp",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "price",
+								"type": "uint256"
+							},
+							{
+								"internalType": "bool",
+								"name": "isOpen",
+								"type": "bool"
+							},
+							{
+								"internalType": "bool",
+								"name": "hasHierdFreelancer",
+								"type": "bool"
+							},
+							{
+								"internalType": "uint256",
+								"name": "hierdFrelancerID",
+								"type": "uint256"
+							},
+							{
+								"internalType": "bool",
+								"name": "isPaid",
+								"type": "bool"
+							}
+						],
+						"internalType": "struct JobListing[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "employerID",
+						"type": "uint256"
+					}
+				],
 				"name": "getNumberOfCreatedJobList",
 				"outputs": [
 					{
@@ -279,6 +524,42 @@
 					}
 				],
 				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getTotalFreelancer",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "employerID",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "freelancerID",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "JobID",
+						"type": "uint256"
+					}
+				],
+				"name": "hireFreelancer",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -308,6 +589,47 @@
 					}
 				],
 				"name": "registerFreelancer",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "employerID",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "freelancerID",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "JobID",
+						"type": "uint256"
+					}
+				],
+				"name": "releasEscrowPyment",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "employerID",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "withdrowAmount",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -341,20 +663,20 @@
 		"viaIR": true
 	},
 	"sources": {
-		"Code Eater/Freelancer.sol": {
-			"keccak256": "0x1c112ff72b531ebd949a55aef3dfcb3ca8dccfe2b1b2d0063eb61ebd45479fa8",
+		"Code Eater/DataType.sol": {
+			"keccak256": "0x2a84b6d1611800891d2c291e23660bc8754bd9efa00be566049b14cd743af413",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://1dcfdffb8efaaafeaa31c7cb6dff304c44cd88567c8a105033ddd75eacbf0310",
-				"dweb:/ipfs/QmZwFm7TBC4qU2U1hxEk9oPxrd5GF8tDst7s9vzuhVYaE3"
+				"bzz-raw://afaeb01852051e66aadbc200b2543ea501d8dde8ab344a900050ecc2f6af3d53",
+				"dweb:/ipfs/Qmc5z6jrCYexJJLs52eeKbNhAaqeKKV83f6MSCb94eeJKg"
 			]
 		},
-		"Code Eater/Type/DataType.sol": {
-			"keccak256": "0x3ccc7ca6f69865e34645bf71ffd85ee716d590469f7492f68b0ac2558590c46a",
+		"Code Eater/Freelancer.sol": {
+			"keccak256": "0x002ff0344d183b12792d337313200d5046607d71e4ab3ec9aa1e88c5e66a557d",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://26411aa97ee80502588ea87a9290d115e80a966768cb857612b1cd0367b6c2dd",
-				"dweb:/ipfs/QmayteDpkqn2qERkNuGUXqqrWgnH5vVmdgzsCttMFo3Eab"
+				"bzz-raw://e8ea8df47a90f9051b4af56c9742d3455246986d5b66fdbd85e40d8f7fc95eb6",
+				"dweb:/ipfs/QmSsja7x2CK5n1K5vBvXWb5cTHX5yvEx1T9cuEeVKfG9eF"
 			]
 		}
 	},
