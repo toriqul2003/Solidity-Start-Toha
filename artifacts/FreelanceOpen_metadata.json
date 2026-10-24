@@ -648,7 +648,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"Code Eater/Freelancer.sol": "FreelanceOpen"
+			"Code Eater/myTest.sol": "FreelanceOpen"
 		},
 		"evmVersion": "osaka",
 		"libraries": {},
@@ -671,7 +671,7 @@
 				"dweb:/ipfs/Qmc5z6jrCYexJJLs52eeKbNhAaqeKKV83f6MSCb94eeJKg"
 			]
 		},
-		"Code Eater/Freelancer.sol": {
+		"Code Eater/myTest.sol": {
 			"keccak256": "0x002ff0344d183b12792d337313200d5046607d71e4ab3ec9aa1e88c5e66a557d",
 			"license": "MIT",
 			"urls": [

@@ -14,51 +14,51 @@ contract FreelanceOpen {
 
     mapping (uint => address) public freelanceridToAddress;
     mapping (uint => address) public employeridToAddress;
-    mapping (uint => uint) public employerBalances;
+    mapping (uint => uint) public employerBalance;
 
     event registerProfile (uint indexed id, address indexed caller);
 
     error IncorectFee (uint expectedFee, uint actualFee);
-    error InvalidEmployerID (uint employerID , address caller);
-    error InvalidFreelancerID (uint freelancerID , address caller);
-    error InvalidJobID (uint jobID, uint employerID);
-    error jobClosed (uint jobID);
-    error NotEnoughBalance (uint JobPrice,uint haveBalance);
-    error FreelancerIDNotMatchs (uint GivenID, uint ActualID);
-    error alradyPaid (uint jobID);
+    error JobClosed (uint JobID);
+    error UnothorizedEmployer (address caller, uint employerID);
+    error IncorectFrelancerID (address caller, uint frelancerID);
+    error IncorectJobID (uint employerID, uint JobID);
+    error NotEnoughBalance (uint expectedBalance,uint haveBalance);
+    error IncorrectFreelancerID (uint ProvidedID, uint ActualID);
+    error AlradyPaid (uint JobID);
+    error paymentFailed (address freelancer, uint amount);
+    error withdrowFailed (uint employerAddress, uint amount);
 
     constructor ( ) {
         owner = msg.sender;
     }
-    
+
     modifier onlyOwner {
         require(msg.sender == owner, "You Are Not Owner");
-        _;
+    _;
     }
     
     modifier onlyAuthorizedEmployee (uint employerID){
         address employer = employeridToAddress[employerID];
-
-        if (msg.sender != employer || employer == address(0)){
-            revert InvalidEmployerID (employerID, msg.sender);
-        } 
-         _;
-    }
-        modifier onlyAuthorizedFreenalcer (uint freelancerID){
-        if (freelancerID >= getFreelancerProfileNumber() || freelanceridToAddress[freelancerID] == address(0)){
-            revert InvalidFreelancerID (freelancerID, msg.sender);
-        } 
-         _;
-    }
-        modifier validatJobID (uint jobID,uint employerID){
-        if (jobID >= createdJobNum(employerID)){
-            revert InvalidJobID (jobID, employerID);
+        if (msg.sender != employer && employer == address(0)){
+            revert UnothorizedEmployer(msg.sender, employerID);
         }
-         _;
+        _;
     }
-   
 
-
+    modifier onlyAuthorizedFreelancer (uint freelancerID) {
+        if (freelancerID >= getTotalFreelancer () || freelanceridToAddress[freelancerID] == address(0)){
+            revert IncorectFrelancerID (msg.sender, freelancerID);
+        }
+        _;
+    }
+    modifier validatJobID (uint employerID,uint JobID) {
+        if (JobID >= getNumberOfCreatedJobList(employerID)){
+            revert IncorectJobID (employerID,JobID);
+        }
+        _;
+    }
+    
     function registerEmployee (string memory _name) external {
         employers.push(employee ({
          name : _name,
@@ -85,11 +85,10 @@ contract FreelanceOpen {
         wallet : msg.sender
         }));
         freelanceridToAddress[freelancerProfiles.length] = msg.sender;
-
         emit registerProfile(freelancerProfiles.length, msg.sender);
     }
 
-    function getFreelancerProfileNumber () public view returns (uint){
+    function getTotalFreelancer () public  view returns (uint){
         return freelancerProfiles.length;
     }
 
@@ -97,92 +96,132 @@ contract FreelanceOpen {
         return freelancerProfiles;
     }
 
-    function _getEmployerProfile (uint employerID) internal view returns (employee storage){
+    function _getEmployerProfiles (uint employerID) internal view returns (employee storage){
         return employers[employerID];
     }
 
-    function createdJobNum (uint employerID) public view returns (uint) {
-        return employers [employerID].jobListings.length;
+    function getNumberOfCreatedJobList (uint employerID) public  view returns (uint){
+       return employers[employerID].jobListings.length;
     }
 
-    function createJob (uint employerID, jobListingInput memory _JoblistingInput) external payable {
-        if (msg.value != _JoblistingInput.price){
-            revert IncorectFee(_JoblistingInput.price, msg.value);
-        }
-        employee storage employerProbile = _getEmployerProfile(employerID);
-        uint JobID = createdJobNum (employerID);
 
-        JobListing memory newJobListing = JobListing ({
-             id :JobID,
-             title :_JoblistingInput.title,
-             jobDiscription :_JoblistingInput.jobDiscription,
-             dedlineTimestamp : block.timestamp + _JoblistingInput.dedlineTimestamp,
-             price : _JoblistingInput.price,
-             isOpen : true,
-             hasHierdFreelancer : false,
-             hierdFrelancerID : 0,
-             isPaid : false
-        });
-        employerBalances[employerID] = _JoblistingInput.price;
-        employerProbile.jobListings.push(newJobListing);
-        
-    }
-
-    function _getJob (uint employerID, uint jobID) internal view returns (JobListing storage){
-        return employers[employerID].jobListings[jobID];
-    }
-
-    function _requerJob (JobListing memory job) internal pure {
-        if (job.isOpen != true){
-            revert jobClosed (job.id);
-        }
-    }
-    function getJobList (uint employerID) external view returns (JobListing[ ] memory){
-        return employers[employerID].jobListings;
-    }
-
-    function hireFreelancer (uint employerID, uint jobID, uint freelancerID) public 
-    onlyAuthorizedEmployee(employerID) onlyAuthorizedFreenalcer(freelancerID)validatJobID (jobID,employerID)
+    function creatJobListing (uint employerID, jobListingInput memory _jobListingInputs) external payable
+    onlyAuthorizedEmployee (employerID) 
     {
-        JobListing storage job = _getJob (employerID, jobID);
-        _requerJob (job);
-        job.hierdFrelancerID = freelancerID;
-        job.isOpen = false;
-        job.hasHierdFreelancer= true;
+            if (msg.value != _jobListingInputs.price){
+                revert IncorectFee (_jobListingInputs.price, msg.value);
+            }
+
+            employee storage employerProbile = _getEmployerProfiles(employerID);
+            
+            uint JobID = getNumberOfCreatedJobList(employerID);
+
+            JobListing memory newJob = JobListing({
+                id :JobID,
+                title : _jobListingInputs.title,
+                jobDiscription : _jobListingInputs.jobDiscription,
+                dedlineTimestamp : block.timestamp + _jobListingInputs.dedlineTimestamp,
+                price : _jobListingInputs.price,
+                isOpen : true,
+                hasHierdFreelancer : false,
+                hierdFrelancerID : 0,
+                isPaid : false
+            });
+            employerBalance[employerID] = _jobListingInputs.price;
+            employerProbile.jobListings.push(newJob);
+           
     }
 
-    function calculatePayment (uint amountToSend, uint jobDedlineTimestamp) internal view returns (uint) {
-        if (block.timestamp >= jobDedlineTimestamp){
-            return amountToSend;
+        function _getJob (uint employerID, uint JobID) internal view returns (JobListing storage) {
+            return employers[employerID].jobListings[JobID];
         }
-        uint delayCompletion = block.timestamp - jobDedlineTimestamp;
-        uint delayInDays = (delayCompletion + 1 days -1 days) /1 days;
-        uint diductionBps = delayInDays * LATE_PENALTY_BPS_PER_DAY;
 
-        if (diductionBps > BPS_DOMINATOR){
-            diductionBps = BPS_DOMINATOR;
+        function _requerJob (JobListing memory job) internal pure {
+            if (job.isOpen != true){
+                revert JobClosed (job.id);
+            }
         }
-        uint diductionAmount = (amountToSend * diductionBps) / BPS_DOMINATOR;
-        return amountToSend - diductionAmount;
-    }
 
-    function releasEscrowPayment (uint employerID, uint jobID, uint freelancerID) external 
-    onlyAuthorizedEmployee(employerID) onlyAuthorizedFreenalcer(freelancerID)validatJobID (jobID,employerID)
-    {
-        JobListing storage job = _getJob (employerID, jobID);
-        uint amountToSend = job.price;
+        function getJobList (uint employerID) external view returns (JobListing[] memory){
+            return employers[employerID].jobListings;
+        }
 
-        if (employerBalances[employerID] > amountToSend ){
-            revert NotEnoughBalance (amountToSend, employerBalances[employerID]);
-        }
-        if (freelancerID != job.hierdFrelancerID){
-            revert FreelancerIDNotMatchs (freelancerID, job.hierdFrelancerID);
-        }
-        if (job.isPaid == true){
-            revert alradyPaid (jobID);
-        }
-        employerBalances[employerID] -= amountToSend;
-        uint paymentAmount = calculatePayment(amountToSend, job.dedlineTimestamp);
-    }
+        function hireFreelancer (uint employerID, uint freelancerID, uint JobID) public 
+        onlyAuthorizedEmployee (employerID) onlyAuthorizedFreelancer (freelancerID) validatJobID (employerID,JobID)
+        {
 
-    }
+            JobListing storage job = _getJob(employerID, JobID);
+            _requerJob (job);
+            job.hierdFrelancerID = freelancerID;
+            job.isOpen = false;
+            job.hasHierdFreelancer= true;
+        }
+
+        function _calculatePament (uint amountToSend,uint jobDedline)internal view returns(uint){
+            if (block.timestamp <= jobDedline){
+             return amountToSend;
+            }
+            uint delayCompletion = block.timestamp - jobDedline;
+
+            uint delayInDays = (delayCompletion + 1 days -1) /1 days; 
+
+            uint diductionBps = delayInDays * LATE_PENALTY_BPS_PER_DAY;
+
+            if (diductionBps > BPS_DOMINATOR){
+                diductionBps = BPS_DOMINATOR;
+            }
+
+            uint diductionAmount = (amountToSend * diductionBps) / BPS_DOMINATOR;
+            return amountToSend - diductionAmount;
+        }
+
+        function _sendPaymentToFreelancer (address freelancer, uint amountToSend) internal {
+            (bool success,)= freelancer.call{value:amountToSend}("");
+            if (success == false){
+                revert paymentFailed (freelancer,amountToSend);
+            }
+        }
+
+        function releasEscrowPyment (uint employerID, uint freelancerID, uint JobID) external 
+        onlyAuthorizedEmployee (employerID) onlyAuthorizedFreelancer (freelancerID) validatJobID (employerID,JobID)
+        {
+            JobListing storage job = _getJob(employerID, JobID);
+            uint amountToSend = job.price;
+
+            if (job.price > employerBalance[employerID]){
+                revert NotEnoughBalance (job.price,employerBalance[employerID]);
+            }
+
+            if (freelancerID != job.hierdFrelancerID){
+                revert IncorrectFreelancerID (freelancerID, job.hierdFrelancerID);
+            }
+
+            if (job.isPaid == true){
+                revert AlradyPaid (JobID);
+            }
+            job.isPaid = true;
+            employerBalance[employerID] -= amountToSend; 
+            uint pamentAmount = _calculatePament(amountToSend,job.dedlineTimestamp);
+            _sendPaymentToFreelancer (freelanceridToAddress[freelancerID],pamentAmount);
+        }
+
+        function changeOwner (address newOwner) external onlyOwner{
+            owner = newOwner;
+        }
+
+        function withdrowAmount (uint employerID,uint amount) external onlyAuthorizedEmployee (employerID) {
+            if (employerBalance[employerID] < amount){
+                revert NotEnoughBalance (amount, employerBalance[employerID]);
+            }
+            employerBalance[employerID] -= amount;
+            (bool success,) = employeridToAddress[employerID].call{value:amount}("");
+            if (success == false){
+                revert withdrowFailed (employerID,amount);
+            }
+        }
+
+
+
+
+
+}
