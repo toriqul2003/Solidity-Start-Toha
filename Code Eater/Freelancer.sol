@@ -27,7 +27,7 @@ contract FreelanceOpen {
     error IncorrectFreelancerID (uint ProvidedID, uint ActualID);
     error AlradyPaid (uint JobID);
     error paymentFailed (address freelancer, uint amount);
-    error withdrowFailed (uint employerAddress, uint amount);
+    error withdrowFailed (address employerAddress, uint amount);
 
     constructor ( ) {
         owner = msg.sender;
@@ -127,7 +127,7 @@ contract FreelanceOpen {
                 hierdFrelancerID : 0,
                 isPaid : false
             });
-            employerBalance[employerID] = _jobListingInputs.price;
+            employerBalance[employerID] += _jobListingInputs.price;
             employerProbile.jobListings.push(newJob);
            
     }
@@ -216,7 +216,7 @@ contract FreelanceOpen {
             employerBalance[employerID] -= amount;
             (bool success,) = employeridToAddress[employerID].call{value:amount}("");
             if (success == false){
-                revert withdrowFailed (employerID,amount);
+                revert withdrowFailed (employeridToAddress[employerID],amount);
             }
         }
 

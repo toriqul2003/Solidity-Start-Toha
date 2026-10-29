@@ -147,9 +147,9 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint256",
+						"internalType": "address",
 						"name": "employerAddress",
-						"type": "uint256"
+						"type": "address"
 					},
 					{
 						"internalType": "uint256",
@@ -648,7 +648,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"Code Eater/myTest.sol": "FreelanceOpen"
+			"Code Eater/Freelancer.sol": "FreelanceOpen"
 		},
 		"evmVersion": "osaka",
 		"libraries": {},
@@ -671,12 +671,12 @@
 				"dweb:/ipfs/Qmc5z6jrCYexJJLs52eeKbNhAaqeKKV83f6MSCb94eeJKg"
 			]
 		},
-		"Code Eater/myTest.sol": {
-			"keccak256": "0x002ff0344d183b12792d337313200d5046607d71e4ab3ec9aa1e88c5e66a557d",
+		"Code Eater/Freelancer.sol": {
+			"keccak256": "0x71d577a129bf7a8580c7532f9316e714cc488df084ef3f06f26cac25318d5e7a",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://e8ea8df47a90f9051b4af56c9742d3455246986d5b66fdbd85e40d8f7fc95eb6",
-				"dweb:/ipfs/QmSsja7x2CK5n1K5vBvXWb5cTHX5yvEx1T9cuEeVKfG9eF"
+				"bzz-raw://7203e23663aef3dac7fbda28dc9672cf8c5844bcb2b67f13092cc1dde3bcffb0",
+				"dweb:/ipfs/QmVJo9TNUPMaxnFuhQXNVaYKN4tghXDBvqPsSSgD2323Q8"
 			]
 		}
 	},
